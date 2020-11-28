@@ -1,7 +1,7 @@
- import java.io.*;
+import java.io.*;
 import java.util.*;
 
-public class Main {
+public class shellRotate {
 
     public static void main(String[] args) throws Exception {
         // write your code here
@@ -20,11 +20,11 @@ public class Main {
         int shell = scn.nextInt();
         int rotation = scn.nextInt();
 
-        shellRotate(mat,shell,rotation);
+        shellrotate(mat,shell,rotation);
         display(mat);
     }
 
-    public void shellRotate(int mat[][],int s,int r){
+    public static void shellrotate(int mat[][],int s,int r){
         // 1. fill 1d array from mat
         int arr[] = fill1d(mat,s);
         // 2. rotate 1d array
