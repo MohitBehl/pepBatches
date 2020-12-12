@@ -9,7 +9,7 @@ public class searchInSorted2dArr {
 
         int n = scn.nextInt();
         int mat[][] = new int[n][n];
-
+        scn.close();
         for(int i = 0 ; i < n ; i++){
             for(int j = 0 ; j < n ; j++){
                 mat[i][j] = scn.nextInt();
@@ -34,7 +34,7 @@ public class searchInSorted2dArr {
             }
         }
         System.out.println("Not Found");
-        scn.close();
+        
     }
 
 }
