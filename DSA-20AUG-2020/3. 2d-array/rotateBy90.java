@@ -39,6 +39,7 @@ public class rotateBy90 {
                     }
             }
             display(mat);
+        scn.close();
     }
 
     public static void display(int[][] arr){

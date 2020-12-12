@@ -34,6 +34,7 @@ public class searchInSorted2dArr {
             }
         }
         System.out.println("Not Found");
+        scn.close();
     }
 
 }

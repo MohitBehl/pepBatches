@@ -21,6 +21,7 @@ public class shellRotate {
 
         shellrotate(mat,shell,rotation);
         display(mat);
+        scn.close();
     }
 
     public static void shellrotate(int mat[][],int s,int r){
