@@ -102,6 +102,134 @@ public class Array2D {
         }
     }
 
+    public static void spiralDisplay(){
+        Scanner scn = new Scanner(System.in);
+
+        int nr = scn.nextInt() , nc = scn.nextInt();
+        int mat[][] = new int[nr][nc];
+        for(int i = 0; i < nr ; i++){
+            for(int j = 0; j< nc ; j++){
+                mat[i][j] = scn.nextInt();
+            }
+        }
+
+        // main logic
+        int rmin = 0, cmin = 0 , rmax = nr-1 , cmax = nc-1 , count = 0;
+        int TotalNoOfEle = nr*nc;
+        while(count < TotalNoOfEle){
+            //left wall 
+            for(int i = rmin ; i <= rmax ; i++){
+                System.out.println(mat[i][cmin]);
+                count++;
+            }
+            cmin++;
+            // bottom wall 
+            for(int j = cmin ; j <= cmax && count < TotalNoOfEle; j++){
+                System.out.println(mat[rmax][j]);
+                count++;
+            }
+            rmax--;
+            // right wall
+            for(int i = rmax ; i >= rmin && count < TotalNoOfEle; i--){
+                System.out.println(mat[i][cmax]);
+                count++;
+            }
+            cmax--;
+            // top wall
+            for(int j = cmax ; j >= cmin && count < TotalNoOfEle; j--){
+                System.out.println(mat[rmin][j]);
+                count++;
+            }
+            rmin++;
+        }
+    }
+    
+    public static void exitPoint(){
+        Scanner scn = new Scanner(System.in);
+        int nr = scn.nextInt();
+        int nc = scn.nextInt();
+        int grid[][] = new int[nr][nc];
+        for(int i = 0 ; i < nr ; i++){
+            for(int j = 0; j< nc ; j++){
+                grid[i][j] = scn.nextInt();
+            }
+        }
+
+        // logic
+
+        int i = 0 , j = 0;
+        int dir = 0; // 0 - E , 1 - S , 2 - W , 3 - N
+
+        while(true){
+            dir = (dir + grid[i][j])%4;
+
+            if(dir == 0){
+                // move east
+                j++;
+            }else if(dir == 1){
+                // move south
+                i++;
+            }else if(dir == 2){
+                // move west
+                j--;
+            }else if(dir == 3){
+                // move north
+                i--;
+            }
+
+            if(i == -1){
+                // exited through top wall
+                i = 0;
+                break;
+            }else if(j == grid[0].length){
+                // exited through right wall
+                j = grid[0].length-1;
+                break;
+            }else if(i == grid.length){
+                // exited through bottom wall
+                i = grid.length-1;
+                break;
+            }else if(j == -1){
+                // exited through left wall
+                j = 0;
+                break;
+            }
+        }
+        System.out.println(i);
+        System.out.println(j);
+    }
+    
+    public static void searchInSorted2dArr(){
+        Scanner scn = new Scanner(System.in);
+
+        int nr = scn.nextInt();
+        int nc = nr;
+        int mat[][] = new int[nr][nc];
+        for(int i = 0 ; i < nr ; i++){
+            for(int j = 0 ; j < nc ; j++){
+                mat[i][j] = scn.nextInt();
+            }
+        }
+        int ele = scn.nextInt();
+
+        // main logic
+        int i = 0  , j = mat[0].length-1;
+
+        while(j >= 0 && i < mat.length){
+            if(ele < mat[i][j]){
+                // smaller
+                j--;
+            }else if(ele > mat[i][j]){
+                // larger
+                i++;
+            }else if(ele == mat[i][j]){
+                // element found
+                System.out.println(i+"\n"+j);
+                return;
+            }
+        }
+        System.out.println("Not Found");
+    }
     public static void main(String[] args) {
         // // int mat[][] = new int[3][3];
 
