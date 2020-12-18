@@ -172,4 +172,118 @@ public class LinkedList {
             }
         }
     }
+
+
+    public int kthFromLast(int k){
+        Node slow = head , fast = head;
+
+        // fast ptr K times ahead of slow
+
+        for(int jmp = 1 ; jmp <= k ; jmp++){
+            fast = fast.next;
+        }
+
+        while(fast != tail){
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        // fast --> tail , slow --> kth node from tail
+        return slow.data;
+    }
+
+    public int mid(){
+        Node fast = head ,  slow = head;
+        
+        while(fast != tail && fast.next != tail){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        
+        return slow.data;
+    }
+
+    public static LinkedList mergeTwoSortedLists(LinkedList l1, LinkedList l2) {
+        LinkedList l3 = new LinkedList();
+        Node p1 = l1.head;
+        Node p2 = l2.head;
+
+        // logic --> merge
+        while (p1 != null && p2 != null) {
+            if (p1.data < p2.data) {
+                l3.addLast(p1.data);
+                p1 = p1.next;
+            } else {
+                l3.addLast(p2.data);
+                p2 = p2.next;
+            }
+        }
+
+        while (p1 != null) {
+            l3.addLast(p1.data);
+            p1 = p1.next;
+        }
+
+        while (p2 != null) {
+            l3.addLast(p2.data);
+            p2 = p2.next;
+        }
+        return l3;
+    }
+
+    public void oddEven(){
+      
+        LinkedList even = new LinkedList() , odd = new LinkedList();
+        
+        while(this.size > 0){
+            int val = getFirst();
+            removeFirst();
+            
+            if(val % 2 == 0){
+                // even
+                even.addLast(val);
+            }else{
+                // odd
+                odd.addLast(val);
+            }
+        }
+        
+        if(odd.size() == 0){
+            this.head = even.head;
+            this.tail = even.tail;
+            this.size = even.size();
+        }else if(even.size() == 0){
+            this.head = odd.head;
+            this.tail = odd.tail;
+            this.size = odd.size();
+        }else if(odd.size() != 0 && even.size() != 0){
+            // merging
+            odd.tail.next = even.head;
+            
+            this.head = odd.head;
+            this.tail = even.tail;
+            this.size = odd.size() + even.size();
+        }
+    }
+
+    public void removeDuplicates(){
+        LinkedList ll = new LinkedList();
+        
+        ll.addLast(this.getFirst());
+        this.removeFirst();
+        
+        while(this.size > 0){
+           int currVal = this.getFirst();
+           
+           this.removeFirst();
+           if(currVal != ll.getLast()){
+              // currVal --> unique value 
+              ll.addLast(currVal);
+           }
+        }
+        
+        this.head = ll.head;
+        this.tail = ll.tail;
+        this.size = ll.size;
+      }
 }
