@@ -118,6 +118,94 @@ public class Main{
         }
         return node;
     }
+
+    // replace with some of larger
+    static int sum = 0;
+    public static void rwsol(Node node) {
+        if (node == null) {
+            return;
+        }
+        
+        rwsol(node.right);
+
+        int tmp = node.data;
+
+        node.data = sum;
+        sum = sum + tmp;
+
+        rwsol(node.left);
+    }
+
+    // print in range
+    public static void pir(Node node, int d1, int d2) {
+        if(node == null){
+            return;
+        }
+        
+        if(d1 < node.data && d2 < node.data){
+            pir(node.left,d1,d2);
+        }else if(d1 > node.data && d2 > node.data){
+            pir(node.right,d1,d2);
+        }else{
+            pir(node.left,d1,node.data);
+            System.out.println(node.data);
+            pir(node.right,node.data,d2);
+        }
+      }
+
+    public static void targetSumPair2(Node root,Node node,int target){
+        if(node == null){
+            return;
+        }
+        
+        targetSumPair2(root,node.left,target);
+        
+        int val = node.data;
+        int cval = target - val;
+        if(cval > val){
+            if(find(root,cval)){
+                System.out.println(val+" "+cval);
+            }
+        }else{
+            return;
+        }
+        
+        targetSumPair2(root,node.right,target);
+    }
+
+    public static void targetSumPair1Helper(Node node,ArrayList<Integer> list){
+        if(node == null){
+            return;
+        }
+        
+        targetSumPair1Helper(node.left,list);
+        list.add(node.data);
+        targetSumPair1Helper(node.right,list);
+    }
+    public static void targetSumPair1(Node root ,int target){
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        targetSumPair1Helper(root,list);
+        
+        // System.out.println(list);
+        
+        int lo = 0, hi = list.size()-1;
+        
+        while(lo < hi){
+            int lv = list.get(lo);
+            int rv = list.get(hi);
+            
+            if(lv + rv < target){
+                lo++;
+            }else if(lv + rv > target){
+                hi--;
+            }else{
+                // lv + rv == target
+                System.out.println(lv+" "+rv);
+                lo++;
+                hi--;
+            }
+        }
+    }
     public static void display(Node node){
         if(node == null){
             return;
