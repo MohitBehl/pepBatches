@@ -286,4 +286,136 @@ public class LinkedList {
         this.tail = ll.tail;
         this.size = ll.size;
       }
+
+      public void reversePI(){
+        Node curr = head , prev = null;
+
+        while(curr != null){
+            Node nxt = curr.next;
+
+            curr.next = prev;
+
+            prev = curr;
+            curr = nxt;
+        }
+
+        Node tmp = this.head;
+        this.head = this.tail;
+        this.tail = tmp;
+      }
+
+    public Node getNodeAt(int idx){
+        Node tmp = head;
+        
+        for(int jmp = 1 ; jmp <= idx ; jmp++){
+            tmp = tmp.next;
+        }
+        
+        return tmp;
+    }
+    public void reverseDI() {
+      int lo = 0 , hi = this.size-1;
+      
+      while(lo < hi){
+          Node left = getNodeAt(lo);
+          Node right = getNodeAt(hi);
+          
+          int tmp = left.data;
+          left.data = right.data;
+          right.data = tmp;
+          
+          lo++;
+          hi--;
+      }
+    }
+
+    private void displayReverseHelper(Node node){
+        if(node == null){
+            return;
+        }
+        displayReverseHelper(node.next);
+        
+        System.out.print(node.data+" ");
+    }
+
+    public void displayReverse(){
+      displayReverseHelper(head);
+      System.out.println();
+    }
+
+
+    private void reversePRHelper(Node node){
+        if(node == null){
+            return;
+        }
+        
+        reversePRHelper(node.next);
+        
+        if(node != tail){
+            node.next.next = node;
+        }
+      }
+  
+      public void reversePR(){
+        reversePRHelper(this.head);
+      
+        head.next = null;
+        
+        Node tmp = this.head;
+        this.head = this.tail;
+        this.tail = tmp;
+      }
+
+      static Node leftNode;
+      public void reverseDRHelper(Node node,int idx){
+          if(node == null){
+              return;
+          }
+          
+          reverseDRHelper(node.next,idx+1);
+          
+          if(idx >= size/2){
+              Node rightNode = node;
+              
+              int tmp = leftNode.data;
+              leftNode.data = rightNode.data;
+              rightNode.data = tmp;
+              
+              leftNode = leftNode.next;
+          }
+      }
+      public void reverseDR() {
+        leftNode = head;
+        reverseDRHelper(head,0);
+      }
+
+      static Node leftNode;
+        public boolean IsPalindrome() {
+            leftNode = head;
+            return IsPalindromeHelper(head, 0);
+        }
+
+        public boolean IsPalindromeHelper(Node node, int idx) {
+            if (node == null) {
+                return true;
+            }
+
+            boolean res = IsPalindromeHelper(node.next, idx + 1);
+
+            if (res == false) {
+                return false;
+            }
+            if (idx >= size / 2) {
+                Node rightNode = node;
+                if (leftNode.data == rightNode.data) {
+                    leftNode = leftNode.next;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            
+            return true;
+
+        }
 }
