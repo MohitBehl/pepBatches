@@ -418,4 +418,173 @@ public class LinkedList {
             return true;
 
         }
+
+
+        public void kReverse(int k) {
+            LinkedList tmpList = new LinkedList();
+            LinkedList kRevList = new LinkedList();
+
+            while(this.size > 0){
+                if(this.size >= k){
+                    // k reverse possible --> element's k rev order
+                    for(int i = 1 ; i <= k ; i++){
+                        int ele = this.getFirst();
+                        this.removeFirst();
+                        tmpList.addFirst(ele);
+                    }
+
+                }else{
+                    // k reverse not possible --> element's org order
+                        while(this.size>0){
+                            int ele = this.getFirst();
+                            this.removeFirst();
+                            tmpList.addLast(ele);
+                        }
+                }
+                
+                if(kRevList.size == 0){
+                    //
+                    kRevList = tmpList;
+                    tmpList = new LinkedList();
+                }else{
+                    // tmpList merges with kRevList
+                    kRevList.tail.next = tmpList.head;
+                    kRevList.size += tmpList.size;
+                    kRevList.tail = tmpList.tail;
+                    tmpList = new LinkedList();
+                }
+            }
+
+            // kRevList --> main List
+            this.head = kRevList.head;
+            this.tail = kRevList.tail;
+            this.size = kRevList.size;
+        }
+
+        public static int findIntersection(LinkedList one, LinkedList two){
+            Node p1 = one.head , p2 = two.head;
+            if(one.size > two.size){
+                int diff = one.size - two.size;
+                
+                while(diff > 0){
+                    p1 = p1.next;
+                    diff--;
+                }
+            }else if(two.size > one.size){
+                int diff =  two.size - one.size;
+                
+                while(diff > 0){
+                    p2 = p2.next;
+                    diff--;
+                }
+            }
+            
+            while(p1 != p2){
+                p1 = p1.next;
+                p2 = p2.next;
+            }
+        
+          return p1.data;
+      }
+
+    static Node left;
+    public void foldHelper(Node node , int idx){
+        if(node == null){
+            return;
+        }
+        foldHelper(node.next,idx+1);
+        Node right = node;
+        
+        if(idx > this.size/2){
+            
+            Node tmp = left.next;
+            left.next = right;
+            right.next = tmp;
+            
+            left = tmp;
+        }else if(idx == this.size/2){
+            right.next = null;
+            this.tail = right;
+        }
+    }
+    public void fold() {
+      left = head;
+      foldHelper(head,0);
+    }
+
+    public static class LLToStackAdapter {
+        LinkedList<Integer> list;
+    
+        public LLToStackAdapter() {
+          list = new LinkedList<>();
+        }
+    
+    
+        int size() {
+          return list.size();
+        }
+    
+        void push(int val) {
+          list.addFirst(val);
+        }
+    
+        int pop() {
+          if(list.size() == 0){
+              System.out.println("Stack underflow");
+              return -1;
+          }
+          
+          int ele = list.getFirst();
+          list.removeFirst();
+          return ele;
+        }
+    
+        int top() {
+          if(list.size() == 0){
+              System.out.println("Stack underflow");
+              return -1;
+          }
+          
+          int ele = list.getFirst();
+          return ele;
+        }
+      }
+
+      public static class LLToQueueAdapter {
+        LinkedList<Integer> list;
+    
+        public LLToQueueAdapter() {
+          list = new LinkedList<>();
+        }
+    
+        int size() {
+          return list.size();
+        }
+    
+        void add(int val) {
+          list.addLast(val);
+        }
+    
+        int remove() {
+          if(list.size() == 0){
+              System.out.println("Queue underflow");
+              return -1;
+          }
+          int ele = list.getFirst();
+          list.removeFirst();
+          
+          return ele;
+        }
+    
+        int peek() {
+          // write your code here
+          if(list.size() == 0){
+              System.out.println("Queue underflow");
+              return -1;
+          }
+          int ele = list.getFirst();
+          
+          return ele;
+        }
+      }
 }
