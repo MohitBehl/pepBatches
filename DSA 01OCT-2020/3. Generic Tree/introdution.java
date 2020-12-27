@@ -83,6 +83,136 @@ public class Inroduction {
         System.out.println("Node Post " + node.data);
     }
 
+    public static Node getTail(Node node) {
+        while (node.children.size() > 0) {
+            node = node.children.get(0);
+        }
+        return node;
+    }
+
+    public static void linearize(Node node) {
+        for (Node child: node.children) {
+            linearize(child);
+        }
+
+        while (node.children.size() > 1) {
+            Node lastChild = node.children.remove(node.children.size() - 1);
+            Node secondLastChild = node.children.get(node.children.size() - 1);
+
+            Node tailNode = getTail(secondLastChild);
+
+            tailNode.children.add(lastChild);
+        }
+    }
+
+    public static boolean find(Node node, int ele) {
+        if (node.data == ele) {
+            return true;
+        }
+
+        for (Node child: node.children) {
+            if (find(child, ele)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static ArrayList < Integer > nodeToRootPath(Node node, int ele) {
+        if (node.data == ele) {
+            ArrayList < Integer > list = new ArrayList < > ();
+            list.add(ele);
+            return list;
+        }
+
+        for (Node child: node.children) {
+            ArrayList < Integer > ans = nodeToRootPath(child, ele);
+            if (ans.size() > 0) {
+                // element was found in the child-subtree & a proper ele to child node path is being returned
+                ans.add(node.data);
+                return ans;
+            }
+        }
+
+        return new ArrayList < > ();
+    }
+
+    public static int lca(Node root, int d1, int d2) {
+        ArrayList < Integer > pathD1 = nodeToRootPath(root, d1);
+        ArrayList < Integer > pathD2 = nodeToRootPath(root, d2);
+
+        int i = pathD1.size() - 1, j = pathD2.size() - 1;
+
+        while (i >= 0 && j >= 0 && pathD1.get(i) == pathD2.get(j)) {
+            i--;
+            j--;
+        }
+
+        return pathD1.get(i + 1);
+    }
+
+    public static int distanceBetweenNodes(Node root, int d1, int d2) {
+        ArrayList < Integer > pathD1 = nodeToRootPath(root, d1);
+        ArrayList < Integer > pathD2 = nodeToRootPath(root, d2);
+
+        int i = pathD1.size() - 1, j = pathD2.size() - 1;
+
+        while (i >= 0 && j >= 0 && pathD1.get(i) == pathD2.get(j)) {
+            i--;
+            j--;
+        }
+
+        i++;
+        j++;
+
+        return i + j;
+    }
+    
+    private static class Pair {
+        int state;
+        Node node;
+    }
+
+    public static void IterativePreandPostOrder(Node root) {
+        String pre = "";
+        String post = "";
+
+        Stack < Pair > st = new Stack < > ();
+
+        Pair rootPair = new Pair();
+        rootPair.state = -1;
+        rootPair.node = root;
+
+        st.push(rootPair);
+        while (st.size() > 0) {
+            Pair top = st.peek();
+
+            if (top.state == -1) {
+                // pre
+                pre += top.node.data + " ";
+
+                top.state++;
+            } else if (top.state == top.node.children.size()) {
+                // post
+                post += top.node.data + " ";
+
+                st.pop();
+            } else {
+                // top.state >= 0 && top.state < top.node.children.size()
+
+                Pair childPair = new Pair();
+                childPair.state = -1;
+                childPair.node = top.node.children.get(top.state);
+
+                top.state++;
+                st.push(childPair);
+            }
+        }
+
+        System.out.println(pre + "\n" + post);
+    }
+
     public static void main(String[] args) {
 
         int input[] = {
