@@ -1,12 +1,103 @@
 import java.lang.annotation.Target;
 import java.util.Scanner;
 
+import javax.swing.border.Border;
+
 public class RecursionBackTracking {
     public static void main(String[] args) {
         // floodFill();
-        targetSumSubsets();
+        // targetSumSubsets();
+        // nQueens();
+        knightsTour();
+    }
+    public static void knightsTour(){
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int i = scn.nextInt();
+        int j = scn.nextInt();
+
+        knightsTour(new int[n][n],i,j,1);
+    }
+    public static void display(int [][]board){
+        for(int arr[] : board){
+            for(int val : arr){
+                System.out.print(val+" ");
+            }
+            System.out.println();
+        }
+    }
+    public static void knightsTour(int board[][],int row,int col,int moveNumber){
+        if(row < 0 || col < 0 || row >= board.length || col >= board[0].length || board[row][col] != 0){
+            return;
+        }
+
+        if(moveNumber == board.length * board[0].length){
+            board[row][col] = moveNumber;// mark
+            display(board);
+            System.out.println();
+            board[row][col] = 0; // unmark        
+        }
+        
+        
+        board[row][col] = moveNumber;// mark 
+        knightsTour(board,row-2,col+1,moveNumber+1);// dir1
+        knightsTour(board,row-1,col+2,moveNumber+1);// dir2
+        knightsTour(board,row+1,col+2,moveNumber+1);// dir3
+        knightsTour(board,row+2,col+1,moveNumber+1);// dir4
+        knightsTour(board,row+2,col-1,moveNumber+1);// dir5
+        knightsTour(board,row+1,col-2,moveNumber+1);// dir6
+        knightsTour(board,row-1,col-2,moveNumber+1);// dir7
+        knightsTour(board,row-2,col-1,moveNumber+1);// dir8
+        board[row][col] = 0;
+    }
+    public static void nQueens(){
+        // main code
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        nQueens(new int[n][n],0,"");
+    }
+    public static void nQueens(int board[][],int row,String csf){
+        if(row == board.length){
+            System.out.println(csf+".");
+            return;
+        }
+        for(int col = 0; col < board[0].length ; col++){
+            if(isSafe(board,row,col)){
+                board[row][col] = 1; // mark
+                nQueens(board,row+1,csf+row+"-"+col+" ,");
+                board[row][col] = 0; // unmark
+            }
+        }
     }
 
+    public static boolean isSafe(int [][]board,int row,int col){
+        // vertically up
+        for(int i = row-1,j = col ; i >= 0 ; i--){
+            if(board[i][j] == 1){
+                // pos compromised
+                return false;
+            }
+        }
+
+        // left diagonal
+        for(int i = row-1,j = col-1 ; i>=0 && j>=0 ; i--,j--){
+            if(board[i][j] == 1){
+                // pos compromised
+                return false;
+            }
+        }
+
+        // right diagonal
+        for(int i = row-1,j = col+1 ; i >= 0 && j < board[0].length ; i-- , j++){
+            if(board[i][j] == 1){
+                // pos compromised
+                return false;
+            }
+        }
+
+        // postion confirmed & is safe
+        return true;
+    }
     public static void targetSumSubsets(){
         Scanner scn = new Scanner(System.in);
         int n = scn.nextInt();
