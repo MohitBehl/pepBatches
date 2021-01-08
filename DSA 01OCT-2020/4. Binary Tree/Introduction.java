@@ -239,21 +239,157 @@ public class Introduction {
         inTraversal(node.right);
     }
 
+    public static class ITPair{
+        Node node;
+        int state;
+
+        ITPair(Node node,int state){
+            this.node = node;
+            this.state = state;
+        }
+    }
+    public static void iterativeTraversal(Node root){
+        Stack<ITPair> st = new Stack<>();
+        st.push(new ITPair(root, 1));
+        String pre = "" , post = "" , in = "";
+
+        while(st.size() > 0){
+            ITPair top = st.peek();
+
+            if(top.state == 1){
+                // first visit
+                pre += top.node.data+" "; // pre area
+                top.state++;
+
+                if(top.node.left != null){
+                    st.push(new ITPair(top.node.left,1));
+                }
+            }else if(top.state == 2){
+                // second visit
+                in += top.node.data+" "; // in area
+                top.state++;
+
+                if(top.node.right != null){
+                    st.push(new ITPair(top.node.right, 1));
+                }
+            }else {
+                //if(top.state == 3) third visit
+                post += top.node.data +" "; //  post area
+                st.pop();
+            }
+        }
+
+        System.out.println(pre+"\n"+in+"\n"+post);
+    }
+
+    public static void printKLevelsDown(Node node, int k) {
+        if (node == null) {
+            return;
+        }
+
+        if (k == 0) {
+            // kth level
+            System.out.println(node.data);
+            return;
+        }
+
+        printKLevelsDown(node.left, k - 1);
+        printKLevelsDown(node.right, k - 1);
+    }
+    public static ArrayList < Node > nodeToRootPath1(Node node, int data) {
+        if (node == null) {
+            // invalid pos
+            return new ArrayList < > ();
+        }
+
+        if (node.data == data) {
+            // element found
+            ArrayList < Node > list = new ArrayList < > ();
+            list.add(node);
+            return list;
+        }
+
+        ArrayList < Node > resLeft = nodeToRootPath1(node.left, data);
+        if (resLeft.size() > 0) {
+            // element has been found
+            resLeft.add(node);
+            return resLeft;
+        }
+
+        ArrayList < Node > resRight = nodeToRootPath1(node.right, data);
+        if (resRight.size() > 0) {
+            // element has been found
+            resRight.add(node);
+            return resRight;
+        }
+
+        // implication : data not found
+        return new ArrayList < > ();
+    }
+   
+    public static void printKNodesFar(Node root, int data, int totalDistance) {
+        ArrayList < Node > path = nodeToRootPath1(root, data);
+
+        for (int idx = 0; idx < path.size(); idx++) {
+            int remainingDistance = totalDistance - idx;
+            
+            if (remainingDistance == 0) {
+                System.out.println(path.get(idx).data);
+                break;
+            } else if (idx == 0) {
+                printKLevelsDown(path.get(idx), remainingDistance);
+            } else {
+                Node curr = path.get(idx);
+                Node prev = path.get(idx - 1);
+
+                if (curr.left == prev) {
+                    // there is no need to visit left branch
+                    printKLevelsDown(curr.right,remainingDistance-1);
+                } else {
+                    // there is no need to visit right branch
+                    printKLevelsDown(curr.left,remainingDistance-1);
+                }
+            }
+        }
+    }
+
+    public static void pathToLeafFromRoot(Node node, String psf, int wsf, int lo, int hi) {
+        if (node.left != null && node.right != null) {
+            pathToLeafFromRoot(node.left, psf + node.data + " ", wsf + node.data, lo, hi);
+            pathToLeafFromRoot(node.right, psf + node.data + " ", wsf + node.data, lo, hi);
+        } else if (node.left != null) {
+            pathToLeafFromRoot(node.left, psf + node.data + " ", wsf + node.data, lo, hi);
+        } else if (node.right != null) {
+            pathToLeafFromRoot(node.right, psf + node.data + " ", wsf + node.data, lo, hi);
+        } else {
+            // if(node.left == null && node.right == null) : leaf node
+            psf += node.data;
+            wsf += node.data;
+
+            if (wsf >= lo && wsf <= hi) {
+                // in range 
+                System.out.println(psf);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Integer input[] = {10 , 20 , 40 , null , null , 50 , 60 , null , null , 70 , null ,null, 30 , null , 80 , null , null};
-        System.out.println(input[3]);
+        // System.out.println(input[3]);
         Node root = construct(input);
 
-        System.out.print("in:");
-        inTraversal(root);
-        System.out.println(".");
+        // System.out.print("in:");
+        // inTraversal(root);
+        // System.out.println(".");
 
-        System.out.print("pre:");
-        preTraversal(root);
-        System.out.println(".");
+        // System.out.print("pre:");
+        // preTraversal(root);
+        // System.out.println(".");
 
-        System.out.print("post:");
-        postTraversal(root);
-        System.out.println(".");
+        // System.out.print("post:");
+        // postTraversal(root);
+        // System.out.println(".");
+
+        iterativeTraversal(root);
     }
 }
