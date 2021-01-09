@@ -373,6 +373,98 @@ public class Introduction {
         }
     }
 
+    public static Node createLeftCloneTree(Node node) {
+        if(node == null){
+            return null;
+        }
+        Node LCN = createLeftCloneTree(node.left);
+        Node RCN = createLeftCloneTree(node.right);
+        
+        // tmp/clone
+        Node clone = new Node(node.data,null,null);
+        node.left = clone;
+        clone.left = LCN;
+        node.right = RCN;
+        
+        return node;
+    }
+
+    public static void printSingleChildNodes(Node node) {
+        if(node == null){
+            return;
+        }
+        
+        if(node.left != null && node.right == null){
+            // only left child exists
+            System.out.println(node.left.data);
+        }else if(node.left == null && node.right != null){
+            // only right child exists
+            System.out.println(node.right.data);
+        }
+        
+        printSingleChildNodes(node.left);
+        printSingleChildNodes(node.right);
+    }
+
+    public static void printSingleChildNodes(Node node,Node parent) {
+        if(node == null){
+            return;
+        }
+        
+        if(parent != null){
+            if(node == parent.left && parent.right == null){
+                System.out.println(node.data);
+            }else if(node == parent.right && parent.left == null){
+                System.out.println(node.data);
+            }
+        }
+        printSingleChildNodes(node.left,node);
+        printSingleChildNodes(node.right,node);
+    }
+
+    static int tilt = 0;
+    public static int tilt(Node node) {
+        if(node == null){
+            return 0;
+        }
+        
+        int lSum = tilt(node.left);
+        int rSum = tilt(node.right);
+        int diff = Math.abs(lSum-rSum);
+        tilt += diff;
+        
+        return lSum+rSum+node.data;
+    }
+
+    public static Node removeLeaves(Node node) {
+        if(node == null){
+            return null;
+        }
+        
+        if(node.left == null && node.right == null){
+            return null;
+        }
+        
+        node.left = removeLeaves(node.left);
+        node.right = removeLeaves(node.right);
+        
+        return node;
+    }
+
+    static int overallDiameter = 0;
+    public static int diameter1(Node node) {
+        if(node == null){
+            return -1;
+        }
+        int lht = diameter1(node.left);
+        int rht = diameter1(node.right);
+        int nDia = lht + rht + 2;
+        if(nDia > overallDiameter){
+            overallDiameter = nDia;
+        }
+        int nHt = Math.max(lht,rht)+1;
+        return nHt;
+    }
     public static void main(String[] args) {
         Integer input[] = {10 , 20 , 40 , null , null , 50 , 60 , null , null , 70 , null ,null, 30 , null , 80 , null , null};
         // System.out.println(input[3]);
