@@ -15,6 +15,10 @@ public class DivideAndConquer {
 
         System.out.print("Sorted Array -> ");
         print(res);
+
+        quickSort(arr, 0, arr.length - 1);
+        print(arr);
+        scn.close();
     }
 
     public static int[] mergeSort(int arr[],int lo,int hi){
@@ -113,6 +117,32 @@ public class DivideAndConquer {
             }
         }
 
+    }
+
+    public static void quickSort(int[] arr, int lo, int hi) {
+        if(lo > hi ){
+            return;
+        }
+        int pivot = arr[hi];
+        int sPivIdx = partition(arr,pivot,lo,hi);
+        quickSort(arr,lo,sPivIdx-1);
+        quickSort(arr,sPivIdx+1,hi);
+    }
+
+    public static int partition(int[] arr, int pivot, int lo, int hi) {
+        System.out.println("pivot -> " + pivot);
+        int i = lo, j = lo;
+        while (i <= hi) {
+            if (arr[i] <= pivot) {
+                swap(arr, i, j);
+                i++;
+                j++;
+            } else {
+                i++;
+            }
+        }
+        System.out.println("pivot index -> " + (j - 1));
+        return (j - 1);
     }
 
     public static void print(int []arr){
