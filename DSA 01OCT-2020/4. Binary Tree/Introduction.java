@@ -465,6 +465,88 @@ public class Introduction {
         int nHt = Math.max(lht,rht)+1;
         return nHt;
     }
+    public static class BSTPair{
+        int max , min;
+        boolean isBst;
+
+        BSTPair(int max,int min,boolean isBst){
+            this.max = max;
+            this.min = min;
+            this.isBst = isBst;
+        }
+    }
+    public static BSTPair isBST(Node node){
+        if(node == null){
+            BSTPair bp = new BSTPair(Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+            return bp;
+        }
+        BSTPair  lp = isBST(node.left);
+        BSTPair  rp = isBST(node.right);
+
+        int myMax = Math.max(Math.max(lp.max, rp.max),node.data);
+        int myMin = Math.min(Math.min(lp.min, rp.min),node.data);
+        boolean isBst = lp.isBst && rp.isBst && node.data > lp.max && node.data < rp.min;
+
+        return new BSTPair(myMax, myMin, isBst);
+    }
+    public static class IBPair{
+        int ht;
+        boolean isBalanced;
+        IBPair(int ht,boolean isBalanced){
+            this.ht = ht;
+            this.isBalanced = isBalanced;
+        }
+    }
+    public static IBPair isTreeBalanced(Node node){
+        if(node == null){
+            return new IBPair(-1, true);
+        }
+        IBPair lp = isTreeBalanced(node.left);
+        IBPair rp = isTreeBalanced(node.right);
+
+        int myht = Math.max(lp.ht,rp.ht)+1;
+        int bf = Math.abs(lp.ht-rp.ht);
+        boolean isBalanced = lp.isBalanced && rp.isBalanced && bf <= 1;
+        
+        return new IBPair(myht, isBalanced);
+    }
+
+    public static class LBSTPair{
+        int max,min,size,lbstNode;
+        boolean isBst;
+    }
+    public static LBSTPair largestBSTSubtree(Node node){
+        if(node == null){
+            LBSTPair bp = new LBSTPair();
+            bp.max = Integer.MIN_VALUE;
+            bp.min = Integer.MAX_VALUE;
+            bp.size = 0;
+            bp.isBst = true;
+            return bp;
+        }
+        LBSTPair lp = largestBSTSubtree(node.left);
+        LBSTPair rp = largestBSTSubtree(node.right);
+        LBSTPair mp = new LBSTPair();
+        
+        mp.max = Math.max(node.data,Math.max(lp.max,rp.max));
+        mp.min = Math.min(node.data,Math.min(lp.min,rp.min));
+        mp.isBst = lp.isBst && rp.isBst && node.data > lp.max && node.data < rp.min;
+       
+        if(mp.isBst){
+            mp.size = lp.size+rp.size+1;
+            mp.lbstNode = node.data;
+        }else{
+            if(lp.size >= rp.size){
+                mp.size = lp.size;
+                mp.lbstNode = lp.lbstNode;
+            }else{
+                mp.size = rp.size;
+                mp.lbstNode = rp.lbstNode;
+            }
+        }
+        
+        return mp;
+    }
     public static void main(String[] args) {
         Integer input[] = {10 , 20 , 40 , null , null , 50 , 60 , null , null , 70 , null ,null, 30 , null , 80 , null , null};
         // System.out.println(input[3]);
@@ -482,6 +564,15 @@ public class Introduction {
         // postTraversal(root);
         // System.out.println(".");
 
-        iterativeTraversal(root);
+        // iterativeTraversal(root);
+
+        // BSTPair res = isBST(root);
+        // System.out.println(res.isBst);
+
+        // IBPair res = isTreeBalanced(root);
+        // System.out.println(res.isBalanced);
+
+        LBSTPair res = largestBSTSubtree(root);
+        System.out.println(res.lbstNode+"@"+res.size);
     }
 }
