@@ -38,9 +38,57 @@ public class Implementation {
                 }
             }
         }
-
         return false;
     }
+
+    public static void printAllPaths(ArrayList<Edge> graph[],int vtx,int dest,String psf,boolean []visited){
+        if(vtx == dest){
+            System.out.println(psf);
+            return;
+        }
+
+        visited[vtx] = true;
+        
+        for(Edge e : graph[vtx]){
+            if(visited[e.nbr] == false){
+                // unvisited nbr
+                printAllPaths(graph, e.nbr, dest, psf+e.nbr, visited);
+            }
+        }
+
+        visited[vtx] = false; // most important
+    }
+
+    public static ArrayList<ArrayList<Integer>> GCC(ArrayList<Edge> graph[]){
+        boolean[] visited = new boolean[graph.length];
+        ArrayList<ArrayList<Integer>>allComp = new ArrayList<>();
+
+        for(int vtx = 0 ; vtx < graph.length ; vtx++){
+            if(visited[vtx] == false){
+                ArrayList<Integer> comp = new ArrayList<>();
+                GCCHelper(graph,vtx,visited,comp);
+                allComp.add(comp);
+            }
+        }
+
+        return allComp;
+    }
+    public static void GCCHelper(ArrayList<Edge> graph[],int vtx,boolean visited[],ArrayList<Integer> comp){
+        visited[vtx] = true;
+        comp.add(vtx);
+
+        for(Edge e : graph[vtx]){
+            if(visited[e.nbr] == false){
+                // unvisited nbr
+                GCCHelper(graph, e.nbr, visited, comp);
+            }
+        }
+    }
+
+    public static boolean isGraphConnected(ArrayList<Edge> graph[]){
+       return GCC(graph).size() == 1;
+    }
+    
     public static boolean hasPath(ArrayList<Edge> graph[],int src,int dest){
         boolean visited[] = new boolean[graph.length];
         return hasPath(graph,src,dest,visited);
@@ -67,8 +115,13 @@ public class Implementation {
 
         int src = scn.nextInt();
         int dest = scn.nextInt();
-        System.out.println(hasPath(graph, src, dest));
+        // System.out.println(hasPath(graph, src, dest));
+        // printAllPaths(graph, src, dest, ""+src, new boolean[graph.length]);
+        
+        ArrayList < ArrayList < Integer >> comps = GCC(graph);
+        System.out.println(comps);
 
+        System.out.println(isGraphConnected(graph));
     }
 }
 
