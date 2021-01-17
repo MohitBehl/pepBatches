@@ -120,6 +120,123 @@ public class sortingAlgo {
     
             return ans;
         }
+
+        public static void quickSort(int[] arr, int lo, int hi) {
+            if (lo > hi) {
+                return;
+            }
+            int pivot = arr[hi];
+            int pivotIdx = partition(arr, pivot, lo, hi);
+            quickSort(arr, lo, pivotIdx - 1);
+            quickSort(arr, pivotIdx + 1, hi);
+        }
+    
+        public static int partition(int[] arr, int pivot, int lo, int hi) {
+            System.out.println("pivot -> " + pivot);
+            int i = lo, j = lo;
+            while (i <= hi) {
+                if (arr[i] <= pivot) {
+                    swap(arr, i, j);
+                    i++;
+                    j++;
+                } else {
+                    i++;
+                }
+            }
+            System.out.println("pivot index -> " + (j - 1));
+            return (j - 1);
+        }
+        
+        public static int quickSelect(int[] arr, int lo, int hi, int k) {
+            int pivot = arr[hi];
+            int pivotIdx = partition(arr, pivot, lo, hi);
+    
+            if (pivotIdx == k) {
+                return pivot;
+            } else if (k < pivotIdx) {
+                return quickSelect(arr, lo, pivotIdx - 1, k);
+            } else {
+                // if(k > pivotIdx0)
+                return quickSelect(arr, pivotIdx + 1, hi, k);
+            }
+        }
+
+        public static void countSort(int[] arr, int min, int max) {
+            int noe = max - min + 1;
+    
+            int farr[] = new int[noe];
+            for (int i = 0; i < arr.length; i++) {
+                farr[arr[i] - min]++;
+            }
+    
+            for (int i = 1; i < farr.length; i++) {
+                farr[i] = farr[i] + farr[i - 1];
+            }
+    
+            int res[] = new int[arr.length];
+            for (int i = arr.length - 1; i >= 0; i--) {
+                int inpVal = arr[i];
+                int idx = inpVal - min;
+                int pos = farr[idx];
+                res[pos - 1] = inpVal;
+                farr[idx]--;
+            }
+    
+            for (int i = 0; i < arr.length; i++) {
+                arr[i] = res[i];
+            }
+        }
+
+        public static void radixSort(int[] arr) {
+            int max = Integer.MIN_VALUE;
+    
+            for (int val: arr) {
+                if (val > max) {
+                    max = val;
+                }
+            }
+    
+            int count = 0;
+            while (max != 0) {
+                count++;
+                max /= 10;
+            }
+    
+            for (int itr = 0; itr < count; itr++) {
+                countSort(arr, (int) Math.pow(10, itr));
+            }
+        }
+    
+        public static void countSort(int[] arr, int exp) {
+            int farr[] = new int[10];
+    
+            for (int num: arr) {
+                int digit = (num / exp) % 10;
+                farr[digit]++;
+            }
+    
+            for (int i = 1; i < farr.length; i++) {
+                farr[i] = farr[i] + farr[i - 1];
+            }
+    
+            int res[] = new int[arr.length];
+    
+            for (int i = arr.length - 1; i >= 0; i--) {
+                int num = arr[i];
+                int digit = (num / exp) % 10;
+                int pos = farr[digit];
+                res[pos - 1] = num;
+                farr[digit]--;
+            }
+    
+            for (int i = 0; i < arr.length; i++) {
+                arr[i] = res[i];
+            }
+    
+            System.out.print("After sorting on " + exp + " place -> ");
+            print(arr);
+        }
+
         public static void main(String[] args) {
             Scanner scn = new Scanner(System.in);
             int n = scn.nextInt();
