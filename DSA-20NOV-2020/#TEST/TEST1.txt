@@ -1,0 +1,318 @@
+// PROBLEM : diamondProblem
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+
+        // nrow : number of rows
+        // row : current row
+        // nsp : number of spaces
+        // nst : number of stars
+        // sp : starting number of each row
+        // val : helper variable to print a row
+          
+        int nrow = n , row = 1 , nsp = n/2 , nst = 1;
+        int sp = 1;
+        while( row <= nrow ){
+            for(int i = 1 ; i <= nsp ; i++){
+                System.out.print("\t");
+            }
+
+            int val = sp;
+            for(int i = 1 ; i <= nst ; i++){
+                System.out.print(val+"\t");
+                val = i <= (nst/2) ? val+1 : val-1;
+            }
+
+            System.out.println();
+            if(row <= nrow/2){
+                nsp--;
+                nst+=2;
+                sp++;
+            }else{
+                nsp++;
+                nst-=2;
+                sp--;
+            }
+            row++;
+        }
+    }
+}
+
+//PROBLEM : MAD_ANGLES
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+
+        int nrow = n , row = 1 , nst_t1 = 2*n-1 , nst_t2 = 1 , nst_t3 = 2*n-1,nsp = 0;
+
+        while(row <= nrow){
+            printStars(n);// print line
+
+            System.out.print("  ");
+            printSpaces(nsp);
+            
+            printStars(nst_t1);// print triangle1
+            
+            System.out.print("  ");
+
+            printStars(nst_t2);// print triangle2
+
+            System.out.print("  ");
+
+            printStars(nst_t3);// print triangle3
+            
+            System.out.print("  ");
+            printSpaces(nsp);
+            
+            printStars(n);// print line
+
+            System.out.println();
+            nst_t1 -= 2;
+            nst_t2 += 2;
+            nst_t3 -= 2;
+            nsp++;
+            row++;
+        }
+    }
+
+    public static void printStars(int n){
+        for(int i = 1 ; i <= n ;i++){
+            System.out.print("*");
+        }
+    }
+
+    public static void printSpaces(int n){
+        for(int i = 1 ; i <= n ;i++){
+            System.out.print(" ");
+        }
+    }
+}
+
+
+//PROBLEM : linear check
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+
+        int n = scn.nextInt();
+
+        int x1 = scn.nextInt() , y1 = scn.nextInt();
+        boolean isLinearH = true , isLinearV = true;
+        while(n != 1){
+            int x = scn.nextInt() , y = scn.nextInt();
+
+            if(x != x1){
+                isLinearH = false;
+            }
+            
+            if(y != y1){
+                isLinearV = false;
+            }
+            n--;
+        }
+        if(isLinearH||isLinearV){
+            System.out.println("YES");    
+        }else{
+            System.out.println("NO");
+        }
+        
+    }
+}
+
+
+// PROBLEM : Easy_Pattern
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+
+        int nrow = n , row = 1 , offset = 0; 
+
+        while(row <= nrow){
+            int val = n*offset+1;
+            for(int i = 1 ; i <= n ; i++){
+                System.out.print(val+" ");
+                val++;
+            }
+            System.out.println();
+
+            if(row < nrow/2){
+                offset += 2;
+            }else if(row == nrow/2){
+                offset = n%2 == 0 ? offset+1 : offset+2;
+            }else if(row == (nrow/2)+1){
+                offset = n%2 == 0 ? offset-2 : offset-1;
+            }else{
+                offset -= 2;
+            }
+    
+            row++;
+        }
+    }
+}
+
+// PROBLEM : hourGlass 6
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+
+        int nrow = n , row = 1 , nsp = 0 , nst = n;
+
+        while(row <= nrow){
+            // print spaces
+            for(int i = 1 ; i <= nsp ; i++){
+                System.out.print("\t");
+            }
+            // print stars
+            for(int i = 1 ; i <= nst ; i++){
+                if(row > 1 && row <= nrow/2){
+                    if(i == 1 || i == nst){
+                        System.out.print("*\t");
+                    }else{
+                        System.out.print("\t");
+                    }
+                }
+                else{
+                    System.out.print("*\t");
+                }
+            }
+
+            System.out.println();
+
+            if(row <= nrow/2){
+                nsp++;
+                nst-=2;
+            }else{
+                nsp--;
+                nst+=2;
+            }
+            row++;
+        }
+    }
+
+}
+
+
+// PROBLEM : webkull_pattern1
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+
+        for(int i = 1 ; i <= n ; i++){
+            System.out.print("@");
+        }
+        System.out.println();
+
+        int nrow = n , row = 1 , nst = 1;
+
+        while(row <= nrow){
+            // print spaces
+            for(int i = 1 ; i< n ; i++){
+                System.out.print(" ");
+            }
+
+            // print stars
+            for(int i = 1; i <= nst ; i++){
+                System.out.print("*");
+            }
+            System.out.println();
+
+            if(row <= nrow / 2){
+                nst++;
+            }else{
+                nst--;
+            }
+            row++;
+        }
+
+        for(int i = 1 ; i<=n-2 ;i++){
+            System.out.print(" ");
+        }
+        for(int i = 1; i <= n ; i++) {
+            System.out.print("@");
+        }
+        System.out.println();
+
+    }
+}
+
+// PROBLEM : welcome_Rangoli
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int  n = scn.nextInt();
+        int  m = scn.nextInt();
+        
+        int nrow = n , row = 1 , nComp = 1 , nDashes = (m - (nComp*3))/2;
+
+        while(row <= nrow){
+            if(row == nrow/2+1){
+                specialRow(m);
+                
+            }else{
+
+                // print dashes
+                for(int i = 1 ; i <= nDashes ; i++){
+                    System.out.print("-");
+                }
+    
+                // print comp -->  .|.
+                for(int i = 1 ; i <= nComp ; i++){
+                    System.out.print(".|.");
+                }
+    
+                // print dashes
+                for(int i = 1 ; i <= nDashes ; i++){
+                    System.out.print("-");
+                }
+
+            }
+
+            System.out.println();
+            if(row <= nrow/2){
+                nComp += 2;
+                nDashes -= 3;
+            }else{
+                nComp -= 2;
+                nDashes += 3;
+            }
+            row++;
+        }
+    }
+    
+    public static void specialRow(int m){
+        int nDashes = (m - 7)/2;
+        
+        // print Dashes
+        for(int i = 1 ; i <= nDashes ; i++){
+            System.out.print("-");
+        }
+
+        // print WELCOME
+        System.out.print("WELCOME");
+
+        // print Dashes
+        for(int i = 1 ; i <= nDashes ; i++){
+            System.out.print("-");
+        }
+    }
+}
+
