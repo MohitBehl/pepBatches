@@ -1,0 +1,226 @@
+// PROBLEM : ArrRotate
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int arr[] = new int[n];
+
+        for(int i = 0 ; i < arr.length ; i++){
+            arr[i] = scn.nextInt();
+        }
+
+        int k = scn.nextInt();
+
+        rotate(arr, k);
+
+        for(int val : arr){
+            System.out.print(val+" ");
+        }
+        System.out.println();
+    }
+
+    public static void rotate(int arr[],int k){
+        int n = arr.length;
+
+        k = k % n;
+
+        if(k < 0){
+            k += n;
+        }
+
+        // arr = p1 + p2
+        reverse(arr, 0, n-k-1);// reverse p1
+        reverse(arr, n-k, n-1);// reverse p2
+        reverse(arr, 0, n-1);// reverse arr
+    }
+
+    public static void reverse(int arr[],int left , int right){
+        while(left < right){
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+
+            left++;
+            right--;
+        }
+    }
+
+}
+
+// PROBLEM : Problem Palindrome
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int num = scn.nextInt();
+        
+        System.out.println(num == reverse(num));
+
+    }
+    public static int reverse(int num){
+        int res = 0;
+
+        while(num != 0){
+            int digit = num%10;
+
+            res = (res * 10) + digit;
+
+            num = num / 10;
+        }
+
+        return res;
+    }
+}
+
+
+// PROBLEM : phone booth
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int arr[] = new int[n];
+        for(int i = 0 ; i < n ; i++){
+            arr[i] = scn.nextInt();
+        }
+
+        int k = scn.nextInt();
+
+        for(int i = 0 ; i < n ; i++){
+            if(k == 0){
+                System.out.println("true");
+                return;
+            }
+
+            int prev = (i != 0) ? arr[i-1] : arr[i];
+            int curr = arr[i];
+            int next = (i != n-1) ? arr[i+1] : arr[i];
+
+            if(prev == 0 && curr == 0 && next == 0){
+                arr[i] = 1;
+                k--;
+            }
+        }
+        System.out.println(false);
+    }
+}
+
+// PROBLEM : Diagonal_and_wave_traversal
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scn=new Scanner(System.in);
+        int n=scn.nextInt();
+        int[][] dp=new int[n][n];
+        for(int i=0;i<dp.length;i++){
+            for(int j=0;j<dp[0].length;j++){
+                dp[i][j]=scn.nextInt();
+            }
+        }
+    boolean flag=true;
+    for(int gap=-(dp.length-1);gap<=dp.length-1;gap++){
+            
+        if(gap<=0){
+                
+            if(flag){
+                for(int j=0,i=j-gap;j<dp[0].length&&i<dp.length;j++,i++){
+                System.out.println(dp[i][j]+" ");
+                // System.out.println(i+","+j+" ");
+            }
+            flag=!flag;
+            }
+            else{
+                for(int i=dp[0].length-1,j=i+gap;i>=0&&j>=0;i--,j--){
+                    System.out.println(dp[i][j]+" ");
+                    // System.out.println(i+","+j+" ");
+                }
+                flag=!flag;
+            }
+        }else{
+            if(flag){
+                for(int i=0,j=i+gap;i<dp[0].length&&j<dp[0].length;i++,j++){
+                    System.out.println(dp[i][j]+" ");
+                    // System.out.println(i+","+j+" ");
+                }
+                flag=!flag;
+            }
+            else{
+                
+                for(int j=dp[0].length-1,i=j-gap;i>=0&&j>=0;i--,j--){
+                    System.out.println(dp[i][j]+" ");
+                    // System.out.println(i+","+j+" ");
+                }
+                flag=!flag;
+            }
+        }    
+    }
+    }
+}
+
+
+// PROBLEM : point-of-parity
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int arr[] = new int[n];
+        for(int i = 0 ; i < arr.length ; i++){
+            arr[i] = scn.nextInt();
+        }
+
+        int sum = 0;
+        for(int val : arr){
+            sum += val;
+        }
+
+        int rSum = sum;
+        int lSum = 0;
+        boolean flag = false;
+        for(int i = 0 ; i < arr.length ; i++){
+            rSum -= arr[i];
+
+            if(lSum == rSum){
+                // point of parity exists
+                System.out.println(i);
+                flag = true;
+                break;
+            }
+
+            lSum += arr[i];
+        }
+        if(flag == false){
+            // point of parity doesn't exist
+            System.out.println("-1");
+        }
+    }
+}
+
+
+// PROBLEM : Recursive_Dillema
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+
+        recursiveCode(n);
+    }
+    public static void recursiveCode(int n){
+        if(n == 0){
+            return;
+        }
+
+        recursiveCode(n-1);
+        System.out.print(n+" ");
+        recursiveCode(n-1);
+
+    }
+}
