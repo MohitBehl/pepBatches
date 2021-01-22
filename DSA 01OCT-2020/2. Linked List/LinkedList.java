@@ -1,4 +1,6 @@
-public class Node{
+import java.util.LinkedList;
+
+class Node{
     int data;
     Node next;
 }
@@ -7,7 +9,7 @@ public class LinkedList {
     Node tail;
     int size;
 
-      public void addLast(int val) {
+    public void addLast(int val) {
       Node node = new Node();
       node.data = val;
       
@@ -22,7 +24,7 @@ public class LinkedList {
       size++;
     }
 
-      public int size(){
+    public int size(){
         return this.size;
     }
   
@@ -551,7 +553,7 @@ public class LinkedList {
       }
 
       public static class LLToQueueAdapter {
-        LinkedList<Integer> list;
+        LinkedList list;
     
         public LLToQueueAdapter() {
           list = new LinkedList<>();
