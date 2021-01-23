@@ -98,7 +98,7 @@ public class Implementation {
         int vtces = scn.nextInt();
         int edges = scn.nextInt();
         ArrayList<Edge> graph[] = new ArrayList[vtces];
-        int arr[] = new int[6];
+        
         for(int vtx = 0 ; vtx < vtces ; vtx++){
             graph[vtx] = new ArrayList<Edge>();
         }
