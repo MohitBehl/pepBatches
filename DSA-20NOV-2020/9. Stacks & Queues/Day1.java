@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -7,6 +8,7 @@ public class Day1 {
 
         for(int idx = 0 ; idx < exp.length() ; idx++){
             char ch = exp.charAt(idx);
+            Arrays.sort(a);
 
             if(ch == ')'){
                 int count = 0;
