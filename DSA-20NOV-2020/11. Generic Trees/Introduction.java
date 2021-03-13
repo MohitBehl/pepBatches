@@ -167,7 +167,89 @@ public class Main {
     }
   }
   
+  public static boolean areSimilar(Node n1, Node n2) {
+    if(n1.children.size() !=  n2.children.size()){
+        return false;
+    }
+    
+    for(int idx = 0 ; idx < n1.children.size() ; idx++){
+        Node child1 = n1.children.get(idx);
+        Node child2 = n2.children.get(idx);
+        
+        if(areSimilar(child1,child2) == false){
+            return false;
+        }
+    }
+    
+    return true;
+  }
 
+  static int MSum = Integer.MIN_VALUE;
+  static Node MSSNode = null;
+  
+  public static int NodeWithMaxSubtreeSum(Node node){
+      int lSum = 0;
+      for(Node child : node.children){
+          lSum += NodeWithMaxSubtreeSum(child);
+      }
+      lSum += node.data;
+      
+      if(lSum > MSum){
+          MSum = lSum;
+          MSSNode = node;
+      }
+      
+      return lSum;
+  }
+
+  static int diaOfTree = 0;
+  public static int diameter(Node node){
+      int lh = -1 , slh = -1;
+      for(Node child : node.children){
+          int ht = diameter(child);
+          
+          if(ht > lh){
+              slh = lh;
+              lh = ht;
+          }else if(ht > slh){
+              slh = ht;
+          }
+      }
+      
+      int diaOfNode = lh + slh + 2;
+      if(diaOfNode > diaOfTree){
+          diaOfTree = diaOfNode;
+      }
+      
+      return lh+1;
+  }
+
+  public static void IterativePreandPostOrder(Node root) {
+    Stack<Pair> st = new Stack<>();
+    
+    st.push(new Pair(root,-1));
+    String pre = "" , post = "";
+    while(st.size() > 0){
+        Pair top = st.peek();
+        
+        if(top.state == -1){
+            pre += top.node.data+" ";
+            top.state++;
+        }else if(top.state == top.node.children.size()){
+            post += top.node.data+" ";
+            st.pop();
+        }else{
+            Node child = top.node.children.get(top.state);
+            Pair pair = new Pair(child,-1);
+            st.push(pair);
+            top.state++;
+        }
+    }
+    
+    System.out.println(pre);
+    System.out.println(post);
+  }
+  
     public static void main(String[] args) {
         Integer input[] = {10,20,50,null,60,null,null,30,70,null,80,110,null,120,null,null,90,null,null,40,100,null,null,null};
         Node root = Construct(input);
