@@ -126,6 +126,101 @@ public class L001 {
                 }
             }
         }
+
+        void removeLast(){
+            if(size == 0){
+                System.out.println("List is empty");
+            }else {
+                if(size == 1){
+                    head = tail = null;
+                }else{
+
+                    Node tmp = head;
+
+                    while(tmp.next != tail){
+                        tmp = tmp.next;
+                    }
+
+                    tmp.next = null;
+                    tail = tmp;
+                }
+                size--;
+            }
+        }
+
+        void removeAt(int idx){
+            if(size == 0){
+                System.out.println("List is Empty");
+            }else if(idx < 0 || idx >= size){
+                System.out.println("Invalid arguments");
+            }else if(idx == 0){
+                removeFirst();
+            }else if(idx == size-1){
+                removeLast();
+            }else{
+                Node tmp = head;
+                for(int i = 1 ; i <= idx-1 ; i++){
+                    tmp = tmp.next;
+                }
+
+                Node nbr = tmp.next;
+                Node newNbr = nbr.next;
+                
+                nbr.next = null;
+                tmp.next = newNbr;
+                size--;
+            }         
+        }
+
+        Node getNodeAt(int idx){
+            if(size == 0){
+                System.out.println("List is empty");
+                return null;
+            }else if(idx < 0 || idx >= size){
+                System.out.println("Invalid arguments");
+                return null;
+            }else{
+                Node tmp = head;
+
+                while(idx > 0){
+                    tmp = tmp.next;
+                    idx--;
+                }
+                return tmp;
+            }
+        }
+        void reverseDI() {
+            int p1 = 0 , p2 = size-1;
+
+            while(p1 < p2){
+                Node n1 = getNodeAt(p1);
+                Node n2 = getNodeAt(p2);
+
+                int tData = n1.data;
+                n1.data = n2.data;
+                n2.data = tData;
+                
+                p1++;
+                p2--;
+            }
+        }
+
+        void reversePI(){
+            Node curr = head , prev = null;
+
+            while(curr != null){
+                Node nbr = curr.next;
+
+                curr.next = prev;
+
+                prev = curr;
+                curr = nbr;
+            }
+
+            Node tmp = head;
+            head = tail;
+            tail = tmp;
+        }
     }
     public static void main(String args[]){
         LinkedList ll = new LinkedList();
