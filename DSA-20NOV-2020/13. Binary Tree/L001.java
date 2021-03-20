@@ -1,4 +1,4 @@
-import java.util.Stack;
+import java.util.*;
 
 class Node{
     int data;
@@ -130,8 +130,175 @@ class BinaryTree{
         int rsum = sumHelper(node.right);
         return lsum+rsum+node.data;
     }
+
+    public void traversals(){
+        System.out.print("PreOrder : ");
+        preOrder(root);
+        System.out.println(".");
+
+        System.out.print("PostOrder : ");
+        postOrder(root);
+        System.out.println(".");
+
+        System.out.print("InOrder : ");
+        inOrder(root);
+        System.out.println(".");
+    }
+
+    private void preOrder(Node node){
+        if(node == null){
+            return;
+        }
+        // pre-area
+        System.out.print(node.data+" -> ");
+
+        preOrder(node.left);
+        preOrder(node.right);
+    } 
+    private void postOrder(Node node){
+        if(node == null){
+            return;
+        }
+        postOrder(node.left);
+        postOrder(node.right);
+
+        // post-area
+        System.out.print(node.data+" -> ");
+    } 
+    private void inOrder(Node node){
+        if(node == null){
+            return;
+        }
+        inOrder(node.left);
+        // in-area
+        System.out.print(node.data+" -> ");
+        inOrder(node.right);
+    } 
+
+    public void levelOrder(){
+        levelOrderHelper(root);
+    }
+
+    private void levelOrderHelper(Node node){
+        // HW question snippet
+    }
+
+    public boolean find(int ele){
+        return findHelper(root, ele);
+    }
+    private boolean findHelper(Node node,int ele){
+        if(node == null){
+            return false;
+        }
+        if(node.data == ele){
+            return true;
+        }
+        boolean lRes = findHelper(node.left, ele);
+        if(lRes){
+            return true;
+        }
+        boolean rRes = findHelper(node.right, ele);
+        if(rRes){
+            return true;
+        }
+        return false;
+    }
+
+    public ArrayList<Integer> nodeToRootPath(int ele){
+        return nodeToRootPathHelper(root, ele);
+    }
+    private ArrayList<Integer> nodeToRootPathHelper(Node node ,int ele){
+        if(node == null){
+            return new ArrayList<>();
+        }
+
+        if(node.data == ele){
+            ArrayList<Integer> list = new ArrayList<>();
+            list.add(node.data);
+            return list;
+        }
+
+        ArrayList<Integer> lPath = nodeToRootPathHelper(node.left, ele);
+        if(lPath.size() != 0){
+            lPath.add(node.data);
+            return lPath;
+        }
+
+        ArrayList<Integer> rPath = nodeToRootPathHelper(node.right, ele);
+        if(rPath.size() != 0){
+            rPath.add(node.data);
+            return rPath;
+        }
+
+        return new ArrayList<>();
+    }
+
+    public void printKLevelsDown(int k){
+        printKLevelsDownHelper(root, k);
+    }
+
+    private void printKLevelsDownHelper(Node node,int k){
+        if(node == null){
+            return;
+        }
+        if(k == 0){
+            System.out.println(node.data);
+            return;
+        }
+
+        printKLevelsDownHelper(node.left, k-1);
+        printKLevelsDownHelper(node.right, k-1);
+    }
+
+    public void kDistAway(int data,int totalDist){
+        ArrayList<Node> list = nodeToRootPath(this.root, data);
+
+        printKLevelsDownHelper(list.get(0), totalDist);
+        for(int idx = 1 ; idx < list.size() ; idx++){
+            int remDist = totalDist-idx;
+            Node curr = list.get(idx);
+            Node prev = list.get(idx-1);
+            if(remDist == 0){
+                System.out.println(curr.data);
+                return;
+            }else{
+                if(curr.left == prev){
+                    printKLevelsDownHelper(curr.right, remDist-1);
+                }else{
+                    printKLevelsDownHelper(curr.left, remDist-1);
+                }
+            }
+        }
+    }
+    private ArrayList<Node> nodeToRootPath(Node node ,int ele){
+        if(node == null){
+            return new ArrayList<>();
+        }
+
+        if(node.data == ele){
+            ArrayList<Node> list = new ArrayList<>();
+            list.add(node);
+            return list;
+        }
+
+        ArrayList<Node> lPath = nodeToRootPath(node.left, ele);
+        if(lPath.size() != 0){
+            lPath.add(node);
+            return lPath;
+        }
+
+        ArrayList<Node> rPath = nodeToRootPath(node.right, ele);
+        if(rPath.size() != 0){
+            rPath.add(node);
+            return rPath;
+        }
+
+        return new ArrayList<>();
+    }
 }
-public class L001 {   
+
+
+public class L001 {   // rename this class to Main , inorder to submit this question
 
     public static void main(String args[]){
         Scanner scn = new Scanner(System.in);
@@ -146,16 +313,26 @@ public class L001 {
                 arr[i] = Integer.parseInt(inp);
             }
         }
-
+        // int level = scn.nextInt();
         BinaryTree bt = new BinaryTree(arr);
 
-        int size = bt.size();
-        int sum = bt.sum();
-        int max = bt.max();
-        int ht = bt.height();
-        System.out.println(size);
-        System.out.println(sum);
-        System.out.println(max);
-        System.out.println(ht);
+        // int size = bt.size();
+        // int sum = bt.sum();
+        // int max = bt.max();
+        // int ht = bt.height();
+        // System.out.println(size);
+        // System.out.println(sum);
+        // System.out.println(max);
+        // System.out.println(ht);
+
+        // bt.traversals();
+        // bt.levelOrder();
+
+        // bt.printKLevelsDown(level);
+        
+        int data = scn.nextInt();
+        int k = scn.nextInt();
+
+        bt.kDistAway(data, k);
     }
 }
