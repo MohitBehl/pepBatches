@@ -51,6 +51,7 @@ public class L001{
 
         return false;
     }
+    
     public static void allPath(ArrayList<Edge> graph[] , int vtx ,int dest , boolean visited[] , String psf){
         if(vtx == dest){
             System.out.println(psf);
