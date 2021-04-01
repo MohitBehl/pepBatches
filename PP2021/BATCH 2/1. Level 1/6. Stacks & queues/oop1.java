@@ -5,9 +5,9 @@ public class oop1{
         int age;
         static int count;
 
-        // Person(){
-        //     System.out.println("welcome ");
-        // }
+        Person(){
+            System.out.println("welcome ");
+        }
 
         Person(String n , int a){
             name  = n;
@@ -21,8 +21,8 @@ public class oop1{
 
     public static void main(String args[]){
         // Person p1 = new Person("abc",3);
-        // p1.name = "abc";
-        // p1.age = 3;
+        p1.name = "abc";
+        p1.age = 3;
         // p1.saysHi();
         // p1.count = 15;
 
