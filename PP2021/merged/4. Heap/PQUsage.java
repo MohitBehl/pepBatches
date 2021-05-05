@@ -46,8 +46,8 @@ public class PQUsage {
         while(pq.size() > 0){
             System.out.println(pq.remove());
         }
-
-       
+        
+        
     }
     
 }
