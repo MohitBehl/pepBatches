@@ -1,20 +1,47 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class PQUsingHeap {
 
-  public static class PriorityQueue {
-    ArrayList<Integer> data;
+  public static class PriorityQueue<T> {
+    ArrayList<T> data;
+    Comparator<T> comp; // alternate logic for comparing two values
 
     public PriorityQueue() {
       data = new ArrayList<>();
+      comp = null;
     }
 
-    public void add(int val) {
+    public PriorityQueue(Comparator<T> comp) {
+      data = new ArrayList<>();
+      this.comp = comp;
+    }
+
+    public void add(T val) {
       data.add(val);
       upHeapify(data.size()-1);
     }
-    
+    private boolean isSmaller(int cidx,int pidx){
+      if(comp == null){
+        Comparable child = (Comparable) data.get(cidx);
+        Comparable par = (Comparable) data.get(pidx);
+  
+        if(child.compareTo(par) < 0){
+          return true;
+        }else{
+          return false;
+        }
+      }else{
+        T child =  data.get(cidx);
+        T par =  data.get(pidx);
+
+        if(comp.compare(child, par) < 0){
+          return true;
+        }else{
+          return false;
+        }
+      }
+    }
     public void upHeapify(int idx){
         if(idx == 0){
             return;
@@ -22,9 +49,9 @@ public class Main {
         
         int pidx = (idx-1)/2;
         
-        int cVal = data.get(idx);
-        int pVal = data.get(pidx);
-        if(cVal < pVal){
+        if(isSmaller(idx, pidx) == true){
+            T cVal = data.get(idx);
+            T pVal = data.get(pidx);
             data.set(pidx,cVal);
             data.set(idx,pVal);
             
@@ -32,12 +59,12 @@ public class Main {
         }
     }
 
-    public int remove() {
+    public T remove() {
       if(data.size() == 0){
           System.out.println("Underflow");
-          return -1;
+          return null;
       }
-      int val = data.get(0);
+      T val = data.get(0);
       data.set(0,data.get(data.size()-1));
       data.remove(data.size()-1);
       downHeapify(0);
@@ -50,17 +77,17 @@ public class Main {
         
         int minIdx = idx;
         
-        if(lidx < data.size() && data.get(lidx) < data.get(minIdx)){
+        if(lidx < data.size() && isSmaller(lidx,minIdx) == true){
             minIdx = lidx;
         }
         
-        if(ridx < data.size() && data.get(ridx) < data.get(minIdx)){
+        if(ridx < data.size() && isSmaller(ridx,minIdx) == true){
             minIdx = ridx;
         }
         
         if(minIdx != idx){
-            int val = data.get(idx);
-            int minVal = data.get(minIdx);
+            T val = data.get(idx);
+            T minVal = data.get(minIdx);
             
             data.set(idx,minVal);
             data.set(minIdx,val);
@@ -69,10 +96,10 @@ public class Main {
         }
     }
     
-    public int peek() {
+    public T peek() {
       if(data.size() == 0){
           System.out.println("Underflow");
-          return -1;
+          return null;
       }
       return data.get(0);
     }
@@ -82,29 +109,50 @@ public class Main {
     }
   }
 
-  public static void main(String[] args) throws Exception {
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    PriorityQueue qu = new PriorityQueue();
+  static class Student implements Comparable<Student>{
+    int rno , marks , rank;
 
-    String str = br.readLine();
-    while (str.equals("quit") == false) {
-      if (str.startsWith("add")) {
-        int val = Integer.parseInt(str.split(" ")[1]);
-        qu.add(val);
-      } else if (str.startsWith("remove")) {
-        int val = qu.remove();
-        if (val != -1) {
-          System.out.println(val);
-        }
-      } else if (str.startsWith("peek")) {
-        int val = qu.peek();
-        if (val != -1) {
-          System.out.println(val);
-        }
-      } else if (str.startsWith("size")) {
-        System.out.println(qu.size());
-      }
-      str = br.readLine();
+    Student(int rno,int marks,int rank){
+        this.rno = rno;
+        this.marks = marks;
+        this.rank = rank;
     }
+    public int compareTo(Student o){
+        return this.marks - o.marks;
+    }
+
+    public String toString(){
+        return "rno : "+this.rno+" marks : "+this.marks+" rank : "+this.rank;
+    }
+  }
+
+  static class StudentRankComparator implements Comparator<Student>{
+    // s1-s2 : min
+    // s2-s1 : max
+    public int compare(Student s1 , Student s2){
+        return s2.rank - s1.rank;
+    }
+  }
+
+  static class StudentRollComparator implements Comparator<Student>{
+      // s1-s2 : min
+      // s2-s1 : max
+      public int compare(Student s1 , Student s2){
+          return s2.rno - s1.rno;
+      }
+  }
+  
+  public static void main(String[] args) throws Exception {
+    PriorityQueue<Student> pq = new PriorityQueue<>(new StudentRollComparator());
+        pq.add(new Student(5,50,25));
+        pq.add(new Student(16,75,10));
+        pq.add(new Student(1,0,30));
+        pq.add(new Student(10,25,28));
+        pq.add(new Student(7,30,27));
+        pq.add(new Student(12,60,20));
+
+        while(pq.size() > 0){
+            System.out.println(pq.remove());
+        }
   }
 }
