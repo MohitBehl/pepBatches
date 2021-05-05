@@ -7,6 +7,20 @@ public class PQUsingHeap {
     ArrayList<T> data;
     Comparator<T> comp; // alternate logic for comparing two values
 
+    public PriorityQueue(T inp[]){
+      data = new ArrayList<>();
+      comp = null;
+      // for(T val : inp){
+      //   add(val);
+      // }
+
+      for(T val : inp){
+        data.add(val);
+      }
+      for(int idx = (data.size()-2)/2 ; idx >= 0 ; idx--){
+        downHeapify(idx);
+      }
+    }
     public PriorityQueue() {
       data = new ArrayList<>();
       comp = null;
@@ -21,6 +35,7 @@ public class PQUsingHeap {
       data.add(val);
       upHeapify(data.size()-1);
     }
+    
     private boolean isSmaller(int cidx,int pidx){
       if(comp == null){
         Comparable child = (Comparable) data.get(cidx);
@@ -42,6 +57,7 @@ public class PQUsingHeap {
         }
       }
     }
+    
     public void upHeapify(int idx){
         if(idx == 0){
             return;
@@ -143,16 +159,20 @@ public class PQUsingHeap {
   }
   
   public static void main(String[] args) throws Exception {
-    PriorityQueue<Student> pq = new PriorityQueue<>(new StudentRollComparator());
-        pq.add(new Student(5,50,25));
-        pq.add(new Student(16,75,10));
-        pq.add(new Student(1,0,30));
-        pq.add(new Student(10,25,28));
-        pq.add(new Student(7,30,27));
-        pq.add(new Student(12,60,20));
+    // PriorityQueue<Student> pq = new PriorityQueue<>(new StudentRollComparator());
+    //     pq.add(new Student(5,50,25));
+    //     pq.add(new Student(16,75,10));
+    //     pq.add(new Student(1,0,30));
+    //     pq.add(new Student(10,25,28));
+    //     pq.add(new Student(7,30,27));
+    //     pq.add(new Student(12,60,20));
 
-        while(pq.size() > 0){
-            System.out.println(pq.remove());
-        }
+    //     while(pq.size() > 0){
+    //         System.out.println(pq.remove());
+    //     }
+
+    int inp[] = {10,-5,15,32,16,17,18,-100,25,-5,5,15};
+
+    PriorityQueue<Integer> pq = new PriorityQueue(inp);
   }
 }
