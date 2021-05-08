@@ -28,8 +28,16 @@ public class StringIntro {
         // int code = ch;
         // System.out.println(code);
         // // unicode -> char
-        int code = 109;
-        char ch = (char)code;
-        System.out.println(ch);
+        // int code = 109;
+        // char ch = (char)code;
+        // System.out.println(ch);
+
+        String s = "";
+
+        for(int i = 1 ; i <= 1000 ; i++){
+            s = s + "1";
+        }
+
+        System.out.println(s);
     }
 }
