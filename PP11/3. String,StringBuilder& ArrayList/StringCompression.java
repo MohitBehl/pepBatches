@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class StringCompression {
 	public static String compression1(String str){
 		String res = str.charAt(0)+"";
         for(int idx = 1 ; idx < str.length() ; idx++){

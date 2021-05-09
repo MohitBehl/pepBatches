@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class removePrime {
     
     public static boolean isPrime(int val){
         for(int div = 2 ; div * div <= val ; div++){

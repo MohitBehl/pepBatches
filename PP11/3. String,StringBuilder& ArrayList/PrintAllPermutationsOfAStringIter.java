@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class PrintAllPermutationsOfAStringIter {
     public static int fact(int num){
         int res = 1;
         for(int i = 1; i <= num ; i++){

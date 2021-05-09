@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class PrintAllPalindromicSubString {
     public static boolean isPalindrome(String s){
         int lo = 0; 
         int hi = s.length()-1;
