@@ -1,5 +1,5 @@
 import java.util.*;
-public class Main{
+public class Intro{
     public static class Edge{
         int src , dest , wt;
 
