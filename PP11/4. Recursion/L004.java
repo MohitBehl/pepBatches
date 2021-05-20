@@ -41,4 +41,54 @@ public class L004 {
         return mypath;
     }
 
+    public static String keypad[] = {".;","abc","def","ghi","jkl","mno","pqrs","tu","vwx","yz"};
+
+    public static ArrayList<String> getKPC(String str) {
+        if(str.length() == 0){
+            ArrayList<String> base = new ArrayList<>();
+            base.add("");
+            return base;
+        }
+        String roq = str.substring(1);
+        ArrayList<String> rres = getKPC(roq);
+        String word = keypad[Integer.parseInt(str.charAt(0)+"")];
+        ArrayList<String> list = new ArrayList<>();
+        for(int idx = 0 ; idx < word.length() ; idx++){
+            for(String comb : rres){
+                list.add(word.charAt(idx)+comb);
+            }
+        }
+        return list;
+    }
+
+    public static void printSS(String ques, String asf) {
+        if(ques.length() == 0){
+            System.out.println(asf);
+            return;
+        }
+        char ch = ques.charAt(0);
+        String roq = ques.substring(1);
+        
+        printSS(roq,asf+ch);
+        printSS(roq,asf);
+    }
+
+    public static void printStairPaths(int n, String path) {
+        if(n == 0){
+            System.out.println(path);
+            return;
+        }
+        
+        if(n-1 >= 0){
+            printStairPaths(n-1,path+"1");
+        }
+        
+        if(n-2 >= 0){
+            printStairPaths(n-2,path+"2");
+        }
+        
+        if(n-3 >= 0){
+            printStairPaths(n-3,path+"3");
+        }
+    }
 }
