@@ -91,4 +91,6 @@ public class L004 {
             printStairPaths(n-3,path+"3");
         }
     }
+
+    
 }
