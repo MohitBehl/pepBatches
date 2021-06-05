@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class IntroductionToRecursion {
     public static void printDecreasing(int n) {
         if (n == 0) {
@@ -55,6 +57,7 @@ public class IntroductionToRecursion {
         System.out.print(n + " ");
         pzz(n - 1);
         System.out.print(n + " ");
+        Arrays.sort(a);
     }
 
     public static void toh(int n, int src, int dest, int helper) {
