@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class coutnSort {
+public class countSort {
 
   public static void countSort(int[] arr, int min, int max) {
   
