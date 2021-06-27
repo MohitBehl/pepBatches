@@ -175,6 +175,62 @@ public class Main{
                 this.size--;
             }
         }
+    
+        public Node getNodeAt(int idx){
+            if(this.size == 0){
+                // System.out.println("List is empty");
+                return null;
+            }
+            if(idx < 0 || idx >= this.size){
+                // System.out.println("Invalid arguments");
+                return null;
+            }
+
+            Node tmp = head;
+            while(idx > 0){
+                tmp = tmp.next;
+                idx--;
+            }
+            return tmp;
+        }
+        public void reverseDI() {
+            int lp = 0 , rp = this.size-1;
+
+            while(lp < rp){
+                Node left = getNodeAt(lp);
+                Node right = getNodeAt(rp);
+
+                int temp = left.data;
+                left.data = right.data;
+                right.data = temp;
+
+                lp++;
+                rp--;
+            }
+        }
+
+        static Node leftRev;
+        public void reverseDR() {
+            leftRev = head;
+            reverseDRHelper(head,0);
+        }
+
+        public void reverseDRHelper(Node node,int idx){
+            if(node == null){
+                return;
+            }
+            reverseDRHelper(node.next,idx+1);
+            
+            if(idx >= this.size/2){
+                Node right = node;
+                
+                int temp = right.data;
+                right.data = leftRev.data;
+                leftRev.data = temp;
+                
+                leftRev = leftRev.next;
+            }
+        }
     }
     
     public static void main(String args[]){
