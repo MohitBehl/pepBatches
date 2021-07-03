@@ -193,6 +193,7 @@ public class Main{
             }
             return tmp;
         }
+        
         public void reverseDI() {
             int lp = 0 , rp = this.size-1;
 
@@ -230,6 +231,113 @@ public class Main{
                 
                 leftRev = leftRev.next;
             }
+        }
+    
+        public int kthFromLast(int k){
+            Node fwd = this.head;
+            while(k > 0){
+                fwd = fwd.next;
+                k--;
+            }
+
+            Node curr = this.head;
+            while(fwd != tail){
+                fwd = fwd.next;
+                curr = curr.next;
+            }
+
+            return curr.data;
+        }
+
+        public int mid(){
+            Node slow = head, fast = head;
+
+            while(fast != tail && fast.next != tail){
+                fast = fast.next.next;
+                slow = slow.next;
+            }
+            return slow.data;
+        }
+
+        public void removeDuplicates(){
+            LinkedList ll = new LinkedList();
+            ll.addFirst(this.getFirst());
+            
+            while(this.size() > 0){
+                if(ll.getLast() == this.getFirst()){
+                    this.removeFirst();
+                }else{
+                    ll.addLast(this.getFirst());
+                    this.removeFirst();
+                }
+            }
+
+            this.head = ll.head;
+            this.tail = ll.tail;
+            this.size = ll.size;
+        }
+
+        public void oddEven(){
+            // HW
+        }
+        public void kReverse(int k) {
+            LinkedList ans = new LinkedList();
+            LinkedList curr = new LinkedList();
+            
+            while(this.size() > 0){
+                if(this.size() >= k){
+                    // grouping possible
+                    int i = 1;
+                    while(i <= k){
+                        curr.addFirst(this.getFirst());
+                        this.removeFirst();
+                        i++;
+                    }
+                }else{
+                    while(this.size() > 0){
+                        curr.addLast(this.getFirst());
+                        this.removeFirst();
+                    }
+                }
+
+
+                if(ans.size() == 0){
+                    ans = curr;
+                }else{
+                    ans.tail.next = curr.head;
+                    ans.tail = curr.tail;
+                    ans.size += curr.size;
+                }                
+                curr = new LinkedList();
+            }
+
+            this.head = ans.head;
+            this.tail = ans.tail;
+            this.size = ans.size;
+        }
+        public void displayReverse(){
+            displayReverseHelper(head);
+            System.out.println();
+        }
+
+        private void reversePRHelper(Node node){
+            if(node == null){
+                return;
+            }
+            reversePRHelper(node.next);
+            if(node != this.tail){
+                node.next.next = node;
+            }
+        }
+    
+        public void reversePR(){
+            reversePRHelper(head);
+            
+            Node tmp = this.head;
+            this.head = this.tail;
+            this.tail = tmp;
+            
+            this.tail.next = null;
         }
     }
     
