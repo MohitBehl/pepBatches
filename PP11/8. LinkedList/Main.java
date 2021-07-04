@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 public class Main{
     public static class Node{
         int data;
@@ -315,6 +317,16 @@ public class Main{
             this.tail = ans.tail;
             this.size = ans.size;
         }
+
+
+        private void displayReverseHelper(Node node){
+            if(node == null){
+                return;
+            }
+            displayReverseHelper(node.next);
+              System.out.print(node.data+" ");
+        }
+
         public void displayReverse(){
             displayReverseHelper(head);
             System.out.println();
@@ -339,6 +351,131 @@ public class Main{
             
             this.tail.next = null;
         }
+
+        public static LinkedList mergeTwoSortedLists(LinkedList l1, LinkedList l2) {
+            LinkedList res = new LinkedList();
+            Node p1 = l1.head , p2 = l2.head;
+
+
+            while(p1 != null && p2 != null){
+                if(p1.data < p2.data){
+                    res.addLast(p1.data);
+                    p1 = p1.next;
+                }else{
+                    res.addLast(p2.data);
+                    p2 = p2.next;
+                }
+            }
+
+            while(p1 != null){
+                res.addLast(p1.data);
+                p1 = p1.next;
+            }
+
+            while(p2 != null){
+                res.addLast(p2.data);
+                p2 = p2.next;
+            }
+
+            return res;
+        }
+
+        public static Node midNode(Node head,Node tail) {
+            Node f = head;
+            Node s = head;
+      
+            while (f != tail && f.next != tail) {
+              f = f.next.next;
+              s = s.next;
+            }
+      
+            return s;
+        }
+
+        public static LinkedList mergeSort(Node head, Node tail){
+            if(head == tail){
+                LinkedList base = new LinkedList();
+                base.addFirst(head.data);
+                return base;
+            }
+            
+            Node mid = midNode(head,tail);
+            LinkedList left = mergeSort(head,mid);
+            LinkedList right = mergeSort(mid.next,tail);
+            
+            return mergeTwoSortedLists(left,right);
+        }
+
+        public static int findIntersection(LinkedList one, LinkedList two){
+            Node p1 = one.head , p2 = two.head;
+
+            if(one.size > two.size){
+                int diff = one.size - two.size;
+
+                while(diff != 0){
+                    p1 = p1.next;
+                    diff--;
+                }
+            }else{
+                int diff = two.size - one.size;
+
+                while(diff != 0){
+                    p2 = p2.next;
+                    diff--;
+                }
+            }
+
+            while(p1 != p2){
+                p1 = p1.next;
+                p2 = p2.next;
+            }
+
+            return p1.data;
+        }
+
+        static Node leftPal;
+        public boolean IsPalindrome() {
+            leftPal = this.head;
+            boolean res = IsPalindromeHelper(head, 0);
+            return res;
+        }
+
+        public boolean IsPalindromeHelper(Node node , int idx){
+            if(node == null){
+                return true;
+            }
+            boolean res = IsPalindromeHelper(node.next,idx+1);
+
+            if(res){
+                if(idx >= this.size/2){
+                    if(leftPal.data == node.data){
+                        leftPal = leftPal.next;
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+            }
+
+            return res;
+        }
+
+        // public void fold() {
+        //     // H.W.
+        // }
+
+        // public static LinkedList addTwoLists(LinkedList one, LinkedList two)     {
+        //     LinkedList res = new LinkedList();
+        //     int carry = addTwoListsHelper(one.head,two.head,one.size,two.size,res);
+        //     if(carry != 0){
+        //         res.addFirst(carry);
+        //     }
+        //     return res;
+        // }
+        
+        // public static int addTwoListsHelper(Node n1,Node n2,int pos1,int pos2,LinkedList res){
+        //     // H.W.   
+        // }
     }
     
     public static void main(String args[]){
