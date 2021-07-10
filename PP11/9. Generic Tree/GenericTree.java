@@ -1,5 +1,6 @@
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -137,6 +138,133 @@ public class GenericTree{
                 helperq = tempq;
             }
         }
+    }
+
+    public static void mirror(Node node){
+    
+        for(Node child : node.children){
+            mirror(child);
+        }
+        
+        Collections.reverse(node.children);
+    }
+
+
+    public static void removeLeaves(Node node) {
+      
+        for(int idx = node.children.size()-1 ; idx >= 0 ; idx--){
+            Node child = node.children.get(idx);
+            if(child.children.size() == 0){
+                // leaf node
+                node.children.remove(idx);
+            }
+        }
+        
+        for(Node child : node.children){
+            removeLeaves(child);
+        }
+        
+    }
+
+
+    public static Node getTail(Node node){
+        while(node.children.size() == 1){
+            node = node.children.get(0);
+        }
+        
+        return node;
+    }
+  
+    public static void linearize(Node node){
+      for(Node child : node.children){
+          linearize(child);
+      }
+      
+      while(node.children.size() > 1){
+          Node lc = node.children.remove(node.children.size()-1);
+          Node slc = node.children.get(node.children.size()-1);
+          
+          Node tail = getTail(slc);
+          
+          tail.children.add(lc);
+      }
+    }
+
+    public static ArrayList<Integer> nodeToRootPath(Node node, int data){
+        if(node.data == data){
+            ArrayList<Integer> base = new ArrayList<>();
+            base.add(node.data);
+            return base;
+        }
+        
+        for(Node child : node.children){
+            ArrayList<Integer> res = nodeToRootPath(child,data);
+            
+            if(res.size() != 0){
+                res.add(node.data);
+                return res;
+            }
+        }
+        
+        return new ArrayList<>();
+     }
+
+    public static boolean find(Node node, int data) {
+        if(node.data == data){
+            return true;
+        }
+        
+        for(Node child : node.children){
+            boolean res = find(child,data);
+            if(res){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+
+    public static boolean areSimilar(Node n1, Node n2) {
+        if(n1.children.size() != n2.children.size()){
+            return false;
+        }
+        
+        for(int i = 0 ; i < n1.children.size() ; i++){
+            Node child1 = n1.children.get(i);
+            Node child2 = n2.children.get(i);
+            
+            boolean res = areSimilar(child1,child2);
+            
+            if(res == false){
+                return false;    
+            }
+        }
+        
+        return true;
+    }
+
+    public static boolean areMirror(Node n1, Node n2) {
+        if(n1.children.size() != n2.children.size()){
+            return false;
+        }
+        
+        for(int i = 0 ; i < n1.children.size() ; i++){
+            Node c1 = n1.children.get(i);
+            int mIdx = n2.children.size()-1-i;
+            Node c2 = n2.children.get(mIdx);
+            
+            boolean res = areMirror(c1,c2);
+            if(res == false){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    public static boolean IsSymmetric(Node node) {
+        return areMirror(node,node);
     }
     public static void main(String[] args) {
         int input[] = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
