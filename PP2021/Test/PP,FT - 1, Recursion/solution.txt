@@ -1,0 +1,232 @@
+// Qurantine game
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+
+        String str = scn.nextLine();
+
+        int count = 0;
+        for(int li = 0 ; li < str.length() ; li++){
+            for(int ri = li ; ri < str.length() ; ri++){
+                if(str.charAt(li) == str.charAt(ri)){
+                    count++;
+                }
+            }
+        }
+
+        System.out.println(count);
+    }
+}
+
+
+// path of snakes
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Solution{
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+
+        int N = scn.nextInt(); // board length
+        int M = scn.nextInt(); // Number of faces of dice
+
+        System.out.println(count(N,M));
+        System.out.println(paths(N, M));
+        print(N, M);
+        scn.close();
+    }
+
+    public static int count(int N,int M){
+        if(N < 0){
+            return 0;
+        }
+        if(N == 0){
+            return 1;
+        }
+
+        int res = 0;
+        for(int face = 1; face <= M ; face++){
+            res += count(N-face,M);
+        }
+
+        return res;
+    }
+
+    public static void print(int N,int M){
+        printHelper(N,M,"");
+        return;
+    }
+
+    public static ArrayList<String> paths(int N,int M){
+        return pathsHelper(N,M);
+    }
+
+    public static void printHelper(int N,int M,String asf){
+        if(N < 0) return;
+        if(N == 0){
+            System.out.println(asf);
+            return;
+        }
+
+        for(int face = 1 ; face <= M ; face++){
+            printHelper(N-face, M, asf+face);
+        }
+    }
+
+    public static ArrayList<String> pathsHelper(int N,int M){
+        if(N < 0){
+            return new ArrayList<>();
+        }
+
+        if(N == 0){
+            ArrayList<String> base = new ArrayList<>();
+            base.add("");
+            return base;
+        }
+
+        ArrayList<String> myList = new ArrayList<>();
+        for(int face = 1 ; face <= M ; face++){
+            ArrayList<String> rres = pathsHelper(N-face, M);
+            for(String s : rres){
+                myList.add(face+s);
+            }
+        }
+
+        return myList;
+    }
+}
+
+//  fashion show
+
+import java.util.Scanner;
+
+public class solution{
+    public static void main(String args[]){
+        Scanner scn = new Scanner(System.in);
+
+        int n = scn.nextInt();
+
+        int arr[] = new int[n];
+        insert(arr,scn);
+        helper(arr);
+        display(arr);  
+    }
+    public static void display(int []arr){
+        for(int i=0;i<arr.length;i++){
+            System.out.print(arr[i]+" ");
+        }
+        System.out.println();
+    }
+    public static void insert(int []arr,Scanner scn){
+        for(int i=0;i<arr.length;i++){
+            arr[i] = scn.nextInt();
+        }
+    }
+    public static void swap(int []arr,int idx1,int idx2){
+        int temp = arr[idx1];
+        arr[idx1] = arr[idx2];
+        arr[idx2] = temp;
+    }
+    public static void helper(int []arr){
+        // given two elements a,b  
+        // flag --> true a<b order should be followed
+        // flag --> false a>b order should be followed
+        boolean flag = true;
+
+        for(int i=0;i<arr.length-1;i++){
+            if(flag  && arr[i]>arr[i+1]){
+                swap(arr,i,i+1);               
+            }else if(!flag && arr[i]<arr[i+1]){
+                swap(arr,i,i+1);
+            }
+            flag = !flag;
+        }
+    }
+}
+
+// war mines
+
+import java.util.Scanner;
+
+public class Solution {
+
+    // board[i][j] : 1 ->  safe
+    // board[i][j] : 0 ->  unsafe due to mine
+    // board[i][j] : 2 ->  unsafe dueto proximity to mine
+    // board[i][j] : 3 ->  visited
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int m = scn.nextInt();
+
+        int board[][] = new int[n][m];
+
+        for(int i = 0 ; i < n ; i++){
+            for(int j = 0 ; j < m ; j++){
+                board[i][j] = scn.nextInt();
+            }
+        }
+        preprocess(board); //  mark all positions in proximity to mines
+    
+        int len = Integer.MAX_VALUE;
+        for(int i = 0 ; i < n ; i++){
+            int res = solve(board, i, 0);
+            len = Math.min(len,res);
+
+            // System.out.println(i+",0 -> "+res);
+        }
+        System.out.println(len == Integer.MAX_VALUE ? "soldier:KIA" : len-1);
+
+    }
+    public static void display(int board[][]){
+        for(int arr[] : board){
+            for(int val : arr){
+                System.out.print(val+" ");
+            }
+            System.out.println();
+        }
+    }
+    public static int solve(int board[][],int r,int c){
+        if(r < 0 || c < 0 || r >= board.length || c >= board[0].length || board[r][c] != 1){
+            return Integer.MAX_VALUE;
+        }
+        if(c == board[0].length-1){
+            return 1;
+        }
+        
+        board[r][c] = 3; // mark visisted
+        int len = Integer.MAX_VALUE;
+        len = Math.min(len,solve(board, r, c-1));
+        len = Math.min(len,solve(board, r, c+1));
+        len = Math.min(len,solve(board, r-1, c));
+        len = Math.min(len,solve(board, r+1, c));
+        board[r][c] = 1; // unmark visited
+
+        return len != Integer.MAX_VALUE ? len+1 : len;
+    }
+    
+    public static void preprocess(int board[][]){
+        for(int i = 0 ; i < board.length ; i++){
+            for(int j = 0 ; j < board[0].length ; j++){
+                if(board[i][j] == 0){
+                    
+                    if(i-1 >= 0 && board[i-1][j] != 0) {
+                        board[i-1][j] = 2;
+                    }
+                    if(j-1 >= 0 && board[i][j-1] != 0) {
+                        board[i][j-1] = 2;
+                    }
+                    if(i+1 < board.length && board[i+1][j] != 0) {
+                        board[i+1][j] = 2;
+                    }
+                    if(j+1 < board[0].length && board[i][j+1] != 0) {
+                        board[i][j+1] = 2;
+                    }
+                }
+            }
+        }
+    }
+}

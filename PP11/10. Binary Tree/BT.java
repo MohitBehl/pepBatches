@@ -126,6 +126,7 @@ public class BT {
         System.out.println("POST : " + node.data);
     }
 
+    
     public static void main(String[] args) {
         Integer input[] = {10 , 20 , 40 , null , null , 50 ,80 , null , null , null , 30 , 60 , null , 90 , null , null , 70 , null , null};
 
