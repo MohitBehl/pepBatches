@@ -164,6 +164,6 @@ public class Solution {
 
         Node root = construct(arr, 0, arr.length-1);
         display(root);
-        tsp(root,data,root);
+        // tsp(root,data,root);
     }
 }
