@@ -1,6 +1,11 @@
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
+
+import javax.management.Query;
 
 public class Graph {
     public static class Edge{
@@ -199,7 +204,113 @@ public class Graph {
         
         visited[vtx] = false;
     }
-    
+    public static class BFSPair{
+        int vtx;
+        String psf;
+        BFSPair(int vtx,String psf){
+            this.vtx = vtx;
+            this.psf = psf;
+        }
+    }
+    public static void BFS(ArrayList<Edge>[] graph,int vtx){
+        Queue<BFSPair> queue = new ArrayDeque<>();
+        queue.add(new BFSPair(vtx, vtx+""));
+        boolean[] vis = new boolean[graph.length];
+
+        while(queue.size() > 0){
+            BFSPair pair = queue.remove();
+
+            if(!vis[pair.vtx]){
+                vis[pair.vtx] = true;
+
+                System.out.println(pair.vtx+"@"+pair.psf);
+
+                for(Edge e : graph[pair.vtx]){
+                    if(!vis[e.nbr]){
+                        queue.add(new BFSPair(e.nbr, pair.psf+e.nbr));
+                    }
+                }
+            }
+        }
+    }
+
+    public static boolean isCyclic(ArrayList<Edge>[] graph){
+        boolean[] vis = new boolean[graph.length];
+        
+        for(int vtx = 0 ; vtx < graph.length ; vtx++){
+            if(!vis[vtx]){
+                boolean res = isCyclicHelper(graph, vtx,vis); //  comp
+                if(res){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public static boolean isCyclicHelper(ArrayList<Edge>[] graph,int vtx,boolean[] vis){
+        Queue<Integer> queue = new ArrayDeque<>();
+        queue.add(vtx);
+
+        while(queue.size() > 0){
+            int tvtx = queue.remove();
+            if(vis[tvtx]){
+                return true;
+            }else{
+                vis[tvtx] = true;
+                for(Edge e : graph[tvtx]){
+                    if(vis[e.nbr] == false){
+                        queue.add(e.nbr);
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static class isBipartitePair{
+        int vtx,level;
+        isBipartitePair(int vtx,int level){
+            this.vtx = vtx;
+            this.level = level;
+        }
+    }
+    public static boolean isBipartite(ArrayList<Edge>[] graph){
+        int visited[] = new int[graph.length];
+        Arrays.fill(visited, -1);
+        for(int vtx = 0 ; vtx < graph.length ; vtx++){
+            if(visited[vtx] == -1){
+                boolean res = isBipartiteHelper(graph,vtx,visited);
+                if(!res){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public static boolean isBipartiteHelper(ArrayList<Edge>[] graph,int vtx,int[] visited){
+        Queue<isBipartitePair> queue = new ArrayDeque<>();
+        queue.add(new isBipartitePair(vtx, 0));
+
+        while(queue.size() > 0){
+            isBipartitePair pair = queue.remove();
+
+            if(visited[pair.vtx] == -1){
+                visited[pair.vtx] = pair.level;
+
+                for(Edge e : graph[pair.vtx]){
+                    if(visited[e.nbr] == -1){
+                        queue.add(new isBipartitePair(e.nbr, pair.level+1));
+                    }
+                }
+            }else{
+                if(pair.level != visited[pair.vtx]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     public static void main(String[] args) {
         Scanner  scn = new Scanner(System.in);
 
