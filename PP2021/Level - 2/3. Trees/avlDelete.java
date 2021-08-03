@@ -1,98 +1,103 @@
-class avlDelete
-{
-    public static Node deleteNode(Node node, int data)
-    {   
-        if(node == null){
+public class avlDelete {
+    public static class Node{
+        int height , data;
+        Node left , right;
+
+        Node(int data){
+            this.data = data;
+            this.left = this.right = null;
+            this.height = 1;
+        }
+    }
+    public static Node deleteNode(Node root, int data)
+    {
+        if(root == null){
             return null;
         }
 
-        if(data < node.data){
-            node.left = deleteNode(node.left,data);
-        }else if(data > node.data){
-            node.right = deleteNode(node.right, data);
+        if(data < root.data){
+            root.left = deleteNode(root.left , data);
+        }else if(data > root.data){
+            root.right = deleteNode(root.right, data);
         }else{
-            if(node.left == null && node.right == null){ // leaf node removal
+            if(root.left == null && root.right == null){
                 return null;
-            }else if(node.left == null){ // single child removal ,  right child 
-                return node.right;
-            }else if(node.right == null){ // single child removal ,  left child
-                return node.left;
-            }else{ // both child exists
-                int max = getMax(node.left);
-                node.data = max;
+            }else if(root.left == null){
+                return root.right;
+            }else if(root.right == null){
+                return root.left;
+            }else{
+                int max = getMax(root.left);
+                root.data = max;
 
-                node.left = deleteNode(node.left, max);
-                int lht = height(node.left) , rht = height(node.right);
-                node.height = Math.max(lht, rht)+1;
-                return node;
+                root.left = deleteNode(root.left, max);
             }
         }
 
-        int lht = height(node.left) , rht = height(node.right);
-        node.height = Math.max(lht, rht)+1;
-        int diff = lht - rht;
-
-        Node newRoot = node;
-        if(diff > 1){ // left
-            if(data < node.left.data){ // LL
-                newRoot = rightRotate(node);
-            }else if(data > node.left.data){ // LR
-                node.left = leftRotate(node.left);
-                newRoot = rightRotate(node);
+        root.height = Math.max(height(root.left), height(root.right)) + 1;
+        Node newRoot = root;
+        if(difference(root) > 1){ // L
+            int delta = difference(root.left);
+            if(delta >= 0){ // LL
+                newRoot = rightRotate(root);
+            }else if(delta < 0){ // LR
+                root.left = leftRotate(root.left);
+                newRoot = rightRotate(root);
             }
-        }else if(diff < -1){ // right
-            if(data < node.right.data){ // RL
-                node.right = rightRotate(node.right);
-                newRoot = leftRotate(node);
-            }else if(data > node.right.data){ // RR
-               newRoot = leftRotate(node);
+        }else if(difference(root) < -1){ // R
+            int delta = difference(root.right);
+            if(delta > 0){ // RL
+                root.right = rightRotate(root.right);
+                newRoot = leftRotate(root);
+            }else if(delta <= 0){ // RR
+                newRoot = leftRotate(root);
             }
         }
+        
         return newRoot;
-    }
-    public static int getMax(Node node){
-        while(node.right != null){
-            node = node.right;
-        }
-        return node.data;
-    }
-    
-    public static int height(Node node){
-        if(node == null){
-            return 0;
-        }else{
-            return node.height;
-        }
     }
 
     public static Node leftRotate(Node a){
         Node b = a.right;
-        Node t2 = b == null ? null : b.left;
-        if(b != null){
-            b.left = a;
-        }
+        Node t2 = b.left;
+
+        b.left = a;
         a.right = t2;
 
         a.height = Math.max(height(a.left), height(a.right))+1;
-        if(b != null){
-            b.height = Math.max(height(b.left), height(b.right))+1;
-        }
+        b.height = Math.max(height(b.left), height(b.right))+1;
         return b;
     }
 
     public static Node rightRotate(Node a){
         Node b = a.left;
-        Node t2 = b == null ? null : b.right;
-        
-        if(b != null){
-            b.right = a;
-        }
+        Node t2 = b.right;
+
+        b.right = a;
         a.left = t2;
 
         a.height = Math.max(height(a.left), height(a.right))+1;
-        if(b != null){
-            b.height = Math.max(height(b.left), height(b.right))+1;
-        }
+        b.height = Math.max(height(b.left), height(b.right))+1;
         return b;
     }
+    public static int height(Node root){
+        if(root == null){
+            return 0;
+        }
+        return root.height;
+    }
+    public static int difference(Node root){
+        if(root == null){
+            return 0;
+        }
+        return height(root.left) - height(root.right);
+    }    
+    public static int getMax(Node root){
+        while(root.right != null){
+            root = root.right;
+        }
+
+        return root.data;
+    }
+
 }

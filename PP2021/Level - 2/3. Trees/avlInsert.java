@@ -1,6 +1,14 @@
 public class avlInsert{
 
     // height is on the basis of nodes
+    public class Node{
+        int data , height;
+        Node left , right;
+
+        Node(int data){
+            this.data = data;
+        }
+    }
 
     public  Node insertToAVL(Node node,int data)
     {
