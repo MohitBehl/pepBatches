@@ -1,0 +1,135 @@
+// Longest Consecutive Sequence Of Elements
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+  public static void main(String[] args){
+    Scanner scn = new Scanner(System.in);
+    
+    int n = scn.nextInt();
+    int arr[] = new int[n];
+    
+    for(int i = 0 ; i < n ; i++){
+        arr[i] = scn.nextInt();
+    }
+    
+    // Logic
+    
+    HashMap<Integer,Boolean> hm = new HashMap<>();
+    
+    for(int vl : arr){
+        hm.put(vl,true);    
+    }
+    
+    for(int key : hm.keySet()){
+        if(hm.containsKey(key-1)){
+            hm.put(key,false);
+        }
+    }
+    
+    int oSp = -1 , oCounter = 0;
+    
+    for(int key : hm.keySet()){
+        if(hm.get(key)){
+            int sp = key , counter = 1;
+            while(hm.containsKey(sp+counter)){
+                counter++;
+            }
+            
+            if(counter > oCounter){
+                oSp = sp;
+                oCounter = counter;
+            }
+        }
+    }
+    
+    for(int i = 0 ; i < oCounter ; i++){
+        System.out.println(oSp+i);
+    }
+  }
+
+}
+
+
+
+// Highest Frequency Character
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args){
+        Scanner scn = new Scanner(System.in);
+        
+        String inp = scn.nextLine();
+        
+        HashMap<Character , Integer> hm = new HashMap<>();
+        
+        char hfCh = ' ';
+        int hFreq = 0;
+        for(int i = 0 ; i < inp.length() ; i++){
+            char ch = inp.charAt(i);
+            
+            if(hm.containsKey(ch)){
+                hm.put(ch, hm.get(ch)+1 );
+            }else{
+                hm.put(ch,1);
+            }
+            
+            if(hm.get(ch) > hFreq){
+                hFreq = hm.get(ch);
+                hfCh = ch;
+            }
+        }
+        
+        System.out.println(hfCh);
+    }
+
+}
+
+
+// Get Common Elements 1
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+  public static void main(String[] args) {
+    Scanner scn = new Scanner(System.in);
+    int n1 = scn.nextInt();
+    int a1[] = new int[n1];
+    for(int i = 0 ; i < n1 ; i++){
+        a1[i] = scn.nextInt();
+    }
+
+    int n2 = scn.nextInt();
+    int a2[] = new int[n2];
+    for(int i = 0 ; i < n2 ; i++){
+        a2[i] = scn.nextInt();
+    }
+    
+    // logic
+    
+    HashMap<Integer,Integer> hm = new HashMap<>();
+    for(int vl : a1){
+        if(hm.containsKey(vl)){
+            hm.put(vl,hm.get(vl) + 1);
+        }else{
+            hm.put(vl,1);
+        }
+    }
+    
+    for(int vl : a2){
+        if(hm.containsKey(vl)){
+            System.out.println(vl);
+            hm.remove(vl);
+        }
+        
+        if(hm.size() == 0){
+            break;
+        }
+    }
+  }
+
+}
