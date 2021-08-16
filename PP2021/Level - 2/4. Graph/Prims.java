@@ -24,12 +24,12 @@ class Prims
             return this.wt - o.wt;
         }
     }
-    public static int solve(ArrayList<Edge>[] graph){
+    public static long solve(ArrayList<Edge>[] graph){
         int nvtces = graph.length;
         PriorityQueue<Pair> pq = new PriorityQueue<>();
         pq.add(new Pair(1,0));
         boolean[] vis = new boolean[nvtces];
-        int ans = 0;
+        long ans = 0;
 
         while(pq.size() > 0){
             Pair rem = pq.remove();
