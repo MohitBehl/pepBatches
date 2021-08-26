@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class BinaryTree {
     public static class Node{
         int data;
@@ -22,7 +24,7 @@ public class BinaryTree {
     public static Node construct(Integer inp[]){
         Node root = new Node(inp[0],null,null); 
         int idx = 1;
-        Stack<> st = new Stack<>();
+        Stack<Pair> st = new Stack<>();
         st.push(new Pair(root,0));
 
         // 0 -> no child processed , 1 -> left child processed , 2 -> both child processed
@@ -52,9 +54,25 @@ public class BinaryTree {
 
         return root;
     }
+
+    public static void display(Node node){
+        if(node == null){
+            return;
+        }
+
+        String str = "";
+        str += (node.left == null) ? "." : node.left.data;
+        str += " <- "+node.data+" -> ";
+        str += (node.right == null) ? "." : node.right.data;
+        System.out.println(str);
+
+        display(node.left);
+        display(node.right);
+    }    
     public static void main(String args[]){
         Integer inp[] = { 50 , 25 , 12 , null , null , 37 , null , null , 75 , null , 85 , null , null }; 
 
         Node root = construct(inp);
+        display(root);
     }
 }
