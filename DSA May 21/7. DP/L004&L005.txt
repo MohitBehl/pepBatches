@@ -1,0 +1,208 @@
+// Friends Pairing
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args){
+        Scanner scn = new Scanner(System.in);
+        
+        int n = scn.nextInt();
+        
+        int dp[] = new int[n+1];
+        
+        for(int i = 0 ; i <= n ; i++){
+            if(i == 0 || i == 1){
+                dp[i] = 1;
+            }else{
+                dp[i] = dp[i-1] + ((i-1)*dp[i-2]);
+            }
+        }
+        
+        System.out.println(dp[n]);
+    }
+
+}
+
+
+//Paint House
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args){
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        
+        int cost[][] = new int[n][3];
+        for(int i = 0 ; i < n ; i++){
+            cost[i][0] = scn.nextInt();
+            cost[i][1] = scn.nextInt();
+            cost[i][2] = scn.nextInt();
+        }
+        
+        // logic
+        System.out.println(paintHouse2(cost));
+    }
+    // time : O(n) , space = O(n)
+    public static int paintHouse1(int cost[][]){
+        int n = cost.length;
+        int dp[][] = new int[n][3];
+        
+        for(int h = 0 ; h < n ; h++){
+            if(h == 0){
+                dp[h][0] = cost[h][0];
+                dp[h][1] = cost[h][1];
+                dp[h][2] = cost[h][2];
+            }else{
+                dp[h][0] = Math.min(dp[h-1][1],dp[h-1][2]) + cost[h][0];
+                dp[h][1] = Math.min(dp[h-1][0],dp[h-1][2]) + cost[h][1];
+                dp[h][2] = Math.min(dp[h-1][1],dp[h-1][0]) + cost[h][2];
+            }
+        }
+        
+        int minCost = Math.min( Math.min(dp[n-1][0],dp[n-1][1]) , dp[n-1][2] );
+        // System.out.println(minCost);
+        return minCost;
+    }
+    
+    // time = O(n) , space = O(1)
+    public static int paintHouse2(int cost[][]){
+        int n = cost.length;
+        int mRed = 0 , mBlue = 0 , mGreen = 0;
+        
+        for(int h = 0 ; h < n ; h++){
+            if(h == 0){
+                mRed = cost[h][0];
+                mBlue = cost[h][1];
+                mGreen = cost[h][2];
+            }else{
+                int red = Math.min(mBlue,mGreen) + cost[h][0];
+                int blue = Math.min(mRed,mGreen) + cost[h][1];
+                int green = Math.min(mRed,mBlue) + cost[h][2];
+                
+                mRed = red;
+                mBlue = blue;
+                mGreen = green;
+            }
+        }
+        
+        int minCost = Math.min( Math.min(mRed,mBlue) , mGreen);
+        // System.out.println(minCost);
+        return minCost;
+    }
+}
+
+// Count Binary Strings
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+  public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        
+        int n = scn.nextInt();
+        
+        int oStrEndWithZero = 1;
+        int oStrEndWithOne =  1;
+        
+        for(int i = 2; i <= n ; i++){
+            int nStrEndWithZero = oStrEndWithOne;
+            int nStrEndWithOne = oStrEndWithZero + oStrEndWithOne;
+            
+            oStrEndWithZero = nStrEndWithZero;
+            oStrEndWithOne = nStrEndWithOne;
+        }
+        int res = oStrEndWithZero + oStrEndWithOne;
+        System.out.println(res);
+  }
+
+}
+
+// Arrange Buildings
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+  public static void main(String[] args) {
+    Scanner scn = new Scanner(System.in);
+
+    int n = scn.nextInt();
+
+    long oStrEndWithZero = 1;
+    long oStrEndWithOne =  1;
+
+    for (int i = 2; i <= n ; i++) {
+      long nStrEndWithZero = oStrEndWithOne;
+      long nStrEndWithOne = oStrEndWithZero + oStrEndWithOne;
+
+      oStrEndWithZero = nStrEndWithZero;
+      oStrEndWithOne = nStrEndWithOne;
+    }
+    long res = oStrEndWithZero + oStrEndWithOne;
+    System.out.println(res*res);
+  }
+}
+
+// Maximum Sum Non Adjacent Elements
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args){
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        
+        int arr[] = new int[n];
+        for(int i = 0 ; i < n ; i++){
+            arr[i] = scn.nextInt();
+        }
+        
+        int oExc = 0, oInc = 0;
+        
+        for(int ele : arr){
+            int nInc = ele + oExc;
+            int nExc = Math.max(oExc,oInc);
+            
+            oExc = nExc;
+            oInc = nInc;
+        }
+        
+        int mSum = Math.max(oExc,oInc);
+        System.out.println(mSum);
+    }
+}
+
+// Count A+b+c+ Subsequences
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args){
+        Scanner scn = new Scanner(System.in);
+        
+        String exp = scn.nextLine();
+        int cA = 0, cAB = 0, cABC = 0;
+        for(int idx = 0 ; idx < exp.length() ; idx++){
+            char ch = exp.charAt(idx);
+            
+            if(ch == 'a'){
+                cA = 2*cA + 1;
+            }else if(ch == 'b'){
+                cAB = 2*cAB + cA;
+            }else{
+                cABC = 2*cABC + cAB;
+            }
+        }
+        
+        System.out.println(cABC);
+    }
+}

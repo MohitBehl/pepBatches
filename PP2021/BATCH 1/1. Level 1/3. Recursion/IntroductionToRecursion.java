@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class IntroductionToRecursion {
     public static void printDecreasing(int n) {
         if (n == 0) {
@@ -29,7 +32,7 @@ public class IntroductionToRecursion {
         if (n == 0) {
             return 1;
         }
-        int xPowNm1 = power(x, n - 1); // faith
+        int xPowNm1 = powerLinear(x, n - 1); // faith
         int xPowN = x * xPowNm1;
         return xPowN;
     }
@@ -38,7 +41,7 @@ public class IntroductionToRecursion {
         if (n == 0) {
             return 1;
         }
-        int xPowNb2 = power(x, n / 2);
+        int xPowNb2 = powerLogarithmic(x, n / 2);
         int ans = xPowNb2 * xPowNb2;
         if (n % 2 == 1) {
             ans = ans * x;
@@ -55,6 +58,7 @@ public class IntroductionToRecursion {
         System.out.print(n + " ");
         pzz(n - 1);
         System.out.print(n + " ");
+        
     }
 
     public static void toh(int n, int src, int dest, int helper) {
