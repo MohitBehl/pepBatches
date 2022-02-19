@@ -1,8 +1,13 @@
-public class Main{
+package NIET;
+
+class Main{
     public static class Node{
         int data;
         Node next;
         
+        public Node() {
+        }
+
         Node(int data,Node next){
             this.data = data;
             this.next = next;
@@ -14,7 +19,7 @@ public class Main{
         int size;
     
         void addLast(int val) {
-            Node node = new Node();
+            Node node = new Node(val, null);
             node.data = val;
 
             if(size == 0){
@@ -122,6 +127,7 @@ public class Main{
                     tmp.next = node;
                     node.next = nbr;
                     size++;
+                    }
                 }
             }
 
@@ -148,6 +154,9 @@ public class Main{
                         size--;
                     } 
                 }
+            }
+
+            private void removeLast() {
             }
     }
     

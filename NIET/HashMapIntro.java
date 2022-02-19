@@ -1,5 +1,7 @@
+package NIET;
+
 import java.util.*;
-public class Main{
+public class HashMapIntro{
     public static void main(String args[]){
         HashMap<String,Integer> hm = new HashMap<>();
         
