@@ -10,12 +10,11 @@ import java.util.*;
       int copyOfN = n;
       // tmp 
       int tmp = 1;
-      while(copyOfN != 0){
+      while(copyOfN > 9){
         copyOfN = copyOfN / 10;
         tmp = tmp * 10;
       }
-      tmp = tmp / 10;
-      System.out.println(tmp);
+    //   System.out.println(tmp);
       while(tmp != 0){
         int digit = n / tmp;
         System.out.println(digit);
