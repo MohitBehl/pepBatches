@@ -14,7 +14,7 @@ import java.util.*;
         copyOfN = copyOfN / 10;
         tmp = tmp * 10;
       }
-    //   System.out.println(tmp);
+    //   System.out.println(tmp);   
       while(tmp != 0){
         int digit = n / tmp;
         System.out.println(digit);
