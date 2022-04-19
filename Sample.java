@@ -12,7 +12,7 @@ public class Sample {
         }
 
         public int compareTo(Pair o){
-            return o.v2-this.v2;
+            return this.v2-o.v2;
         }
 
         public String toString(){
@@ -31,8 +31,8 @@ public class Sample {
         // for(int a[] : arr){
         //     System.out.println(Arrays.toString(a));
         // }
-        Scanner
-        Pair[] arr = new Pair[4];
+        // Scanner
+        Pair arr[] = new Pair[4];
         arr[0] = new Pair(1,15);
         arr[1] = new Pair(2,10);
         arr[2] = new Pair(2,6);
