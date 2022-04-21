@@ -67,7 +67,7 @@ public class Main {
 
         // boolean res = binarySearch(arr, ele);
 
-        System.out.println(firstIdx(arr, k));
-        System.out.println(lastIdx(arr, k));
+        System.out.println(firstIdx(arr, ele));
+        System.out.println(lastIdx(arr, ele));
     }
 }
