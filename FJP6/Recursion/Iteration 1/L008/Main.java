@@ -57,6 +57,9 @@ public class Main {
 
         for(int i = row-1,j = col+1 ; i >= 0 && j < chess[0].length ; i--,j++){ // upper right diag
             if(chess[i][j] == 1){
+ 
+ 
+ 
                 return false;
             }
         }
