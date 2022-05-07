@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -38,11 +39,57 @@ public class Main {
     }
 
     public static int[] getRing(int mat[][],int shell){
+        int rmin = shell-1 , cmin = shell-1 , rmax = mat.length-shell , cmax = mat[0].length-shell;
 
+        ArrayList<Integer> list = new ArrayList<>();
+
+        // left wall
+        for(int r = rmin, c = cmin ; r <= rmax; r++){
+            list.add(mat[r][c]);
+        }
+        // bottom wall
+        for(int r = rmax, c = cmin+1 ; c <= cmax; c++){
+            list.add(mat[r][c]);
+        }
+        // right wall
+        for(int r = rmax-1, c = cmax ; r >= rmin; r--){
+            list.add(mat[r][c]);
+        }
+        // top wall
+        for(int r = rmin, c = cmax-1 ; c >= cmin+1; c--){
+            list.add(mat[r][c]);
+        }
+
+        int arr[] = new int[list.size()];
+        for(int i = 0 ; i < list.size() ; i++){
+            arr[i] = list.get(i);
+        }
+        return arr;
     }
 
     public static void updateRing(int mat[][],int shell,int vals[]){
-
+        int rmin = shell-1 , cmin = shell-1 , rmax = mat.length-shell , cmax = mat[0].length-shell;
+        int idx = 0;
+        // left wall
+        for(int r = rmin, c = cmin ; r <= rmax; r++){
+            mat[r][c] = vals[idx];
+            idx++;
+        }
+        // bottom wall
+        for(int r = rmax, c = cmin+1 ; c <= cmax; c++){
+            mat[r][c] = vals[idx];
+            idx++;
+        }
+        // right wall
+        for(int r = rmax-1, c = cmax ; r >= rmin; r--){
+            mat[r][c] = vals[idx];
+            idx++;
+        }
+        // top wall
+        for(int r = rmin, c = cmax-1 ; c >= cmin+1; c--){
+            mat[r][c] = vals[idx];
+            idx++;
+        }
     }
 
     public static void rotate(int arr[],int k){
