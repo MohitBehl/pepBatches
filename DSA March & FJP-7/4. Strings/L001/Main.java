@@ -65,14 +65,33 @@ public class Main {
             ans = ans + count;
         }
 		return ans;
-	}
+	}   
+
+    public static String toggleCase(String str){
+        String ans = "";
+
+        for(int i = 0 ; i < str.length() ; i++){
+            char ch = str.charAt(i);
+            // 'a' - LC = 'A' - UC
+            if(ch >= 'a' && ch <= 'z'){
+                char uc =(char)('A' + (ch -'a'));
+                ans = ans + uc;
+            }else if(ch >= 'A' && ch <= 'Z'){
+                char lc =(char)('a' + (ch -'A'));
+                ans = ans + lc;
+            }
+        }
+
+        return ans;
+    }
 
 	public static void main(String[] args) {
 		Scanner scn = new Scanner(System.in);
 		String str = scn.next();
 		// printAllPalindromicSubString(str);
-        System.out.println(compression1(str));
-        System.out.println(compression2(str));
+        // System.out.println(compression1(str));
+        // System.out.println(compression2(str));
+        System.out.println(toggleCase(str));
 	}
 
 }
