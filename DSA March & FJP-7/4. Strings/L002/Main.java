@@ -1,6 +1,19 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        stringBuilderIntro();   
+        // stringBuilderIntro();
+        // arrayListIntro();
+
+        Scanner scn = new Scanner(System.in);
+		int n = scn.nextInt();
+		ArrayList<Integer> al = new ArrayList<>();
+		for(int i = 0 ; i < n; i++){
+			al.add(scn.nextInt());
+		}
+		removePrimes(al);
+		System.out.println(al);
     }
     public static void stringBuilderIntro(){
         // creation
@@ -66,4 +79,38 @@ public class Main {
 
 		return ans.toString();
 	}
+
+    public static void arrayListIntro(){
+        int arr[] = {1,2,3};
+        ArrayList<Integer> list = new ArrayList<>(arr);
+
+        System.out.println(list);
+
+        list.add(10000);
+        list.add(20);
+        list.add(30);
+
+        System.out.println(list+" "+list.size());
+
+        for(int i = 0 ; i < list.size() ; i++){
+            System.out.println(list.get(i));
+        }
+
+        for(int vl : list){
+            System.out.println(vl);
+        }
+    }
+
+    public static boolean checkPrime(int num){
+        for(int fac = 2 ; fac * fac <= num ; fac++){
+            if(num % fac == 0) return false;
+        }
+        return true;
+    }
+
+    public static void removePrimes(ArrayList<Integer> list){
+        for(int i = list.size()-1 ; i >= 0 ; i--){
+            if(checkPrime(list.get(i))) list.remove(i);
+        }
+    }
 }
