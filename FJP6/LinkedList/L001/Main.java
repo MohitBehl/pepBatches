@@ -40,7 +40,16 @@ public class Main {
         }
 
         void removeFirst(){
-            
+            if(this.size == 0) System.out.println("List is empty");
+            else if(this.size == 1){
+                this.head = this.tail = null;
+                this.size = 0;
+            }else{
+                Node nbr = this.head.next;
+                this.head.next = null;
+                this.head = nbr;
+                this.size--;
+            }
         }
     }
     public static void main(String[] args) {
