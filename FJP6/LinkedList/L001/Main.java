@@ -21,7 +21,7 @@ public class Main {
                 this.tail = node;
             }else{
                 this.tail.next = node;
-                this.tail = node;
+                this.tail = node;   
             }
             this.size++;
         }
@@ -31,18 +31,30 @@ public class Main {
         }
 
         void display(){
+            Node ptr = this.head;
+            while(ptr != null){
+                System.out.print(ptr.data+" ");
+                ptr = ptr.next;
+            }
+            System.out.println();
+        }
 
+        void removeFirst(){
+            
         }
     }
     public static void main(String[] args) {
+        LinkedList ll = new LinkedList();
+        ll.addLast(10);
+        ll.addLast(20);
+        ll.addLast(30);
+        ll.addLast(40);
+        System.out.println(ll.size());
+        ll.display();
         // Person p1 = new Person();
         // System.out.println(p1.name+" "+p1.age);
         // p1.name = "rohit";
         // p1.age = 23;
         // System.out.println(p1.name+" "+p1.age);
-        LinkedList ll = new LinkedList();
-        ll.addLast(10);
-        System.out.println(ll.size());
-        ll.display();
     }
 }
