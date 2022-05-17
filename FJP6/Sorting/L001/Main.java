@@ -31,5 +31,18 @@ class Solution {
             }
         }
     }
+
+    public static void insertionSort(int nums[]){
+        int n = nums.length;
+        for(int itr = 1 ; itr <= n-1 ; itr++){
+            for(int idx = itr ; idx > 0 ; idx--){
+                if(nums[idx] < nums[idx-1]){
+                    swap(nums, idx, idx-1);
+                }else{
+                    break;
+                }   
+            }
+        }
+    }
     
 }
