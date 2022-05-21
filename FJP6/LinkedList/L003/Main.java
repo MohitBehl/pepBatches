@@ -8,166 +8,166 @@ public class Main {
         int data;
         Node next;
     }
-    // public static class LinkedList{
-    //     Node head;
-    //     Node tail;
-    //     int size;
+    public static class LinkedList{
+        Node head;
+        Node tail;
+        int size;
 
-    //     void addLast(int val){
-    //         Node node = new Node();
-    //         node.data = val;
+        void addLast(int val){
+            Node node = new Node();
+            node.data = val;
 
-    //         if(this.size == 0){
-    //             this.head = node;
-    //             this.tail = node;
-    //         }else{
-    //             this.tail.next = node;
-    //             this.tail = node;   
-    //         }
-    //         this.size++;
-    //     }
+            if(this.size == 0){
+                this.head = node;
+                this.tail = node;
+            }else{
+                this.tail.next = node;
+                this.tail = node;   
+            }
+            this.size++;
+        }
 
-    //     int size(){
-    //         return this.size;
-    //     }
+        int size(){
+            return this.size;
+        }
 
-    //     void display(){
-    //         Node ptr = this.head;
-    //         while(ptr != null){
-    //             System.out.print(ptr.data+" ");
-    //             ptr = ptr.next;
-    //         }
-    //         System.out.println();
-    //     }
+        void display(){
+            Node ptr = this.head;
+            while(ptr != null){
+                System.out.print(ptr.data+" ");
+                ptr = ptr.next;
+            }
+            System.out.println();
+        }
 
-    //     void removeFirst(){
-    //         if(this.size == 0) System.out.println("List is empty");
-    //         else if(this.size == 1){
-    //             this.head = this.tail = null;
-    //             this.size = 0;
-    //         }else{
-    //             Node nbr = this.head.next;
-    //             this.head.next = null;
-    //             this.head = nbr;
-    //             this.size--;
-    //         }
-    //     }
+        void removeFirst(){
+            if(this.size == 0) System.out.println("List is empty");
+            else if(this.size == 1){
+                this.head = this.tail = null;
+                this.size = 0;
+            }else{
+                Node nbr = this.head.next;
+                this.head.next = null;
+                this.head = nbr;
+                this.size--;
+            }
+        }
 
-    //     int getFirst(){
-    //         if(this.size == 0){
-    //             System.out.println("List is empty");
-    //             return -1;
-    //         }
-    //         return this.head.data;
-    //     }
-    //     int getLast(){
-    //         if(this.size == 0){
-    //             System.out.println("List is empty");
-    //             return -1;
-    //         }
-    //         return this.tail.data;
-    //     }
-    //     int getAt(int idx){
-    //         if(this.size == 0){
-    //             System.out.println("List is empty");
-    //             return -1;
-    //         }
-    //         if(idx < 0 || idx >= this.size){
-    //             System.out.println("Invalid arguments");
-    //             return -1;
-    //         }
-    //         Node ptr = this.head;
-    //         while(idx != 0){
-    //             ptr = ptr.next;
-    //             idx--;
-    //         }
-    //         return ptr.data;
-    //     }
+        int getFirst(){
+            if(this.size == 0){
+                System.out.println("List is empty");
+                return -1;
+            }
+            return this.head.data;
+        }
+        int getLast(){
+            if(this.size == 0){
+                System.out.println("List is empty");
+                return -1;
+            }
+            return this.tail.data;
+        }
+        int getAt(int idx){
+            if(this.size == 0){
+                System.out.println("List is empty");
+                return -1;
+            }
+            if(idx < 0 || idx >= this.size){
+                System.out.println("Invalid arguments");
+                return -1;
+            }
+            Node ptr = this.head;
+            while(idx != 0){
+                ptr = ptr.next;
+                idx--;
+            }
+            return ptr.data;
+        }
 
-    //     void addFirst(int val){
-    //         Node node = new Node();
-    //         node.data = val;
+        void addFirst(int val){
+            Node node = new Node();
+            node.data = val;
 
-    //         if(this.size == 0){
-    //             this.head = this.tail = node;
-    //         }else {
-    //             node.next = this.head;
-    //             this.head = node;
-    //         }
+            if(this.size == 0){
+                this.head = this.tail = node;
+            }else {
+                node.next = this.head;
+                this.head = node;
+            }
 
-    //         this.size++;
-    //     }
+            this.size++;
+        }
 
-    //     void removeLast(){
-    //         if(this.size == 0) System.out.println("List is empty");
-    //         else if(this.size == 1){ this.head = this.tail = null; this.size = 0; }
-    //         else {
-    //             Node ptr = this.head;
-    //             while(ptr.next != this.tail) ptr = ptr.next;
+        void removeLast(){
+            if(this.size == 0) System.out.println("List is empty");
+            else if(this.size == 1){ this.head = this.tail = null; this.size = 0; }
+            else {
+                Node ptr = this.head;
+                while(ptr.next != this.tail) ptr = ptr.next;
 
-    //             ptr.next = null;
-    //             this.tail = ptr;
-    //             this.size--;
-    //         }
-    //     }
-    //     void removeAt(int idx) {
-    //         if(this.size == 0) System.out.println("List is empty");
-    //         else if(idx < 0 || idx >= this.size) System.out.println("Invalid arguments");
-    //         else if(idx == 0) this.removeFirst();
-    //         else if(idx == this.size-1) this.removeLast();
-    //         else {
-    //             Node curr = this.head , prev = null;
+                ptr.next = null;
+                this.tail = ptr;
+                this.size--;
+            }
+        }
+        void removeAt(int idx) {
+            if(this.size == 0) System.out.println("List is empty");
+            else if(idx < 0 || idx >= this.size) System.out.println("Invalid arguments");
+            else if(idx == 0) this.removeFirst();
+            else if(idx == this.size-1) this.removeLast();
+            else {
+                Node curr = this.head , prev = null;
 
-    //             while(idx != 0){prev = curr; curr = curr.next; idx--;}
+                while(idx != 0){prev = curr; curr = curr.next; idx--;}
 
-    //             prev.next = curr.next;
-    //             curr.next = null;
-    //             this.size--;
-    //         }
-    //     }
-    //     // void addAt(int idx,int val){
-    //     // }
+                prev.next = curr.next;
+                curr.next = null;
+                this.size--;
+            }
+        }
+        // void addAt(int idx,int val){
+        // }
 
-    //     int kthFromLast(int k){
-    //         Node slow , fast;
-    //         slow = fast = this.head;
+        int kthFromLast(int k){
+            Node slow , fast;
+            slow = fast = this.head;
 
-    //         while(k != 0){
-    //             fast = fast.next;
-    //             k--;
-    //         }
+            while(k != 0){
+                fast = fast.next;
+                k--;
+            }
 
-    //         while(fast != this.tail){
-    //             slow = slow.next;
-    //             fast = fast.next;
-    //         }
+            while(fast != this.tail){
+                slow = slow.next;
+                fast = fast.next;
+            }
 
-    //         return slow.data;
-    //     }
+            return slow.data;
+        }
 
-    //     public static int findIntersection(LinkedList one, LinkedList two){
-    //         int diff = one.size - two.size;
-    //         Node p1 = one.head , p2 = two.head;
-    //         if(diff < 0){
-    //             while(diff != 0){
-    //                 p2 = p2.next;
-    //                 diff++;
-    //             }
-    //         }else if(diff > 0){
-    //             while(diff != 0){
-    //                 p1 = p1.next;
-    //                 diff--;
-    //             }
-    //         }
+        public static int findIntersection(LinkedList one, LinkedList two){
+            int diff = one.size - two.size;
+            Node p1 = one.head , p2 = two.head;
+            if(diff < 0){
+                while(diff != 0){
+                    p2 = p2.next;
+                    diff++;
+                }
+            }else if(diff > 0){
+                while(diff != 0){
+                    p1 = p1.next;
+                    diff--;
+                }
+            }
 
-    //         while(p1 != p2){
-    //             p1 = p1.next;
-    //             p2 = p2.next;
-    //         }
+            while(p1 != p2){
+                p1 = p1.next;
+                p2 = p2.next;
+            }
 
-    //         return p1.data;
-    //     }
-    // }
+            return p1.data;
+        }
+    }
 
     public static class LLToStackAdapter {
         LinkedList<Integer> list;
