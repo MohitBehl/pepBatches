@@ -151,7 +151,7 @@ public class Main {
     //         if(diff < 0){
     //             while(diff != 0){
     //                 p2 = p2.next;
-    //                 diff--;
+    //                 diff++;
     //             }
     //         }else if(diff > 0){
     //             while(diff != 0){
