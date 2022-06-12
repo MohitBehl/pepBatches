@@ -22,7 +22,44 @@ public class Main{
     }
 
     public static int[]mergeSort(int arr[],int lo,int hi){
+        if(lo == hi){
+            int base[] = new int[1];
+            base[0] = arr[lo];
+            return base;
+        }
+       int mid = (lo+hi)/2;
+
+       int left[] = mergeSort(arr,lo,mid);
+       int right[] = mergeSort(arr,mid+1,hi);
+
+       return mergeTwoSortedArrays(left,right);
+    }
+
+    public int[] sortArray(int[] nums) {
+        return mergeSort(nums,0,nums.length-1);
+    }
+
+
+    public static void partition(int[] arr, int pivot){
+        int i = 0, j = 0;
+
+        while(j < arr.length){
+            if(arr[j] <= pivot){
+                swap(arr,j,i);
+                i++;
+                j++;
+            }else{
+                j++;
+            }
+        }
         
     }
 
+    // used for swapping ith and jth elements of array
+    public static void swap(int[] arr, int i, int j) {
+        System.out.println("Swapping " + arr[i] + " and " + arr[j]);
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
 }
