@@ -15,7 +15,6 @@ public class Main{
     }
 
     void display() {
-        if(size == 0) return;
         for(int i = 0 ; i < size ; i++){
             System.out.print(data[(front+i)%data.length]+" ");
         }
@@ -24,8 +23,18 @@ public class Main{
 
     void add(int val) {
         if(size == data.length){
-            System.out.println("Queue overflow");
-            return;
+            // // dynamic behaviour
+            int arr[] = new int[2 * data.length];
+
+            for(int i = 0 ; i < size ; i++){
+              arr[i] = data[(front+i)%data.length];
+            }
+
+            front = 0; // starting point 
+            this.data = arr; // address change 
+
+            // System.out.println("Queue overflow");
+            // return;
         }
         int idx = (front + size) % data.length;
         data[idx] = val;
