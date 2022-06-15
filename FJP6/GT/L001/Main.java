@@ -1,3 +1,4 @@
+import java.util.*;
 public class Main{
     static class Node{
         int data;
@@ -29,6 +30,9 @@ public class Main{
             idx++;
         }
         return root;
+    }
+    public static void display(Node node){
+
     }
     public static void main(String args[]){
         Integer []arr = {10, 20, 50, null, 60, null, null, 30, 70, 90, null, 100, null, 110, null, null, null, 40, 80, null, null, null};
