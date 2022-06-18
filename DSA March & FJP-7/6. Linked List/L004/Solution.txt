@@ -1,0 +1,99 @@
+
+https://practice.geeksforgeeks.org/problems/circular-linked-list/1
+class GfG
+{
+    boolean isCircular(Node head)
+    {
+	    Node slow = head , fast = head;
+	    
+	    while(fast != null && fast.next != null){
+	        slow = slow.next;
+	        fast = fast.next.next;
+	        if(slow == fast){
+	            return true;
+	        }
+	    }
+	    return false;
+    }
+}
+
+https://leetcode.com/problems/linked-list-cycle-ii/submissions/
+public class Solution {
+    public ListNode isLLCyclic(ListNode head){
+        ListNode slow = head , fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast){
+                return slow;
+            }
+        }
+        return null;
+    }
+    public ListNode detectCycle(ListNode head) {
+        if(head == null) return null;
+        ListNode meetingNode = isLLCyclic(head);
+        if(meetingNode == null) return null;
+        
+        ListNode slow = meetingNode , curr = head;
+        
+        while(true){
+            if(slow == curr){
+                return slow;
+            }
+            slow = slow.next;
+            curr = curr.next;
+        }
+    }
+}
+
+https://leetcode.com/problems/reorder-list/submissions/
+class Solution {
+    public ListNode mid(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        while(fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        return slow;
+    }
+    public ListNode reverse(ListNode head){
+        ListNode curr = head , prev = null;
+        
+        while(curr != null){
+            ListNode nbr = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nbr;
+        }
+        
+        return prev;
+    }
+    public void reorderList(ListNode head) {
+        ListNode midNode = mid(head);
+        ListNode head2 = midNode.next;
+        midNode.next = null; // break
+        head2 = reverse(head2);
+        
+        ListNode dummy = new ListNode();
+        ListNode p1 = head , p2 = head2 , curr = dummy;
+        
+        while(p1 != null && p2 != null){
+            curr.next = p1;
+            curr = curr.next;
+            p1 = p1.next;
+            
+            
+            curr.next = p2;
+            curr = curr.next;
+            p2 = p2.next;
+        }
+        
+        if(p1 != null){
+            curr.next = p1;
+        }
+    }
+}
