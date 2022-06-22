@@ -56,6 +56,43 @@ public class Main{
         display(node.left);
         display(node.right);        
     }
+    public static int size(Node node) {
+        if(node == null){
+            return 0;
+        }
+        int lsize = size(node.left);
+        int rsize = size(node.right);
+        return lsize + rsize + 1;
+    }
+
+    public static int sum(Node node) {
+        if(node == null){
+            return 0;
+        }
+        int lsum = sum(node.left);
+        int rsum = sum(node.right);
+        return lsum + rsum + node.data;
+    }
+
+    public static int max(Node node) {
+        if(node == null){
+            return Integer.MIN_VALUE;
+        }
+        int lmax = max(node.left);
+        int rmax = max(node.right);
+
+        return Math.max(Math.max(lmax,rmax) , node.data);
+    }
+
+    public static int height(Node node) {
+        if(node == null){
+            return -1;
+        }
+        int lht = height(node.left);
+        int rht = height(node.right);
+
+        return Math.max(lht,rht)+1;
+    }
     public static void main(String args[]){
         Integer arr[] = {10,20,40,60,null,null,null,50,70,null,null,80,null,null,30,null,90,100,null,null,null};
         Node root = construct(arr);
