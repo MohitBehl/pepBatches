@@ -200,7 +200,6 @@ public class Main {
         arr[i] = null;
       }
     }
-
     int data = Integer.parseInt(br.readLine());
 
     Node root = construct(arr);
