@@ -137,6 +137,18 @@ public class Main {
             }
         }
     }
+    public static boolean find(Node node, int data) {
+        if(node.data == data){
+        `return true;
+        }
+        for(Node child : node.children){
+            boolean rres = find(child,data);
+            if(rres){
+                return true;
+            }
+        }
+        return false;
+    }
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     int n = Integer.parseInt(br.readLine());
