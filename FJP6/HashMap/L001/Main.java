@@ -75,6 +75,25 @@ public class Main{
         }
         return mfch;
     }
+    public static void solve(int n,int[] arr,int k){
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(int i = 0 ; i < k ; i++){
+            pq.add(arr[i]);
+        }
+        for(int i = k ; i < arr.length ; i++){
+            if(arr[i] > pq.peek()){
+                pq.remove();
+                pq.add(arr[i]);
+            }
+        }
+        Stack<Integer> st = new Stack<>();
+        while(pq.size() > 0){
+            st.push(pq.remove());
+        }
+        while(st.size() > 0){
+            System.out.print(st.pop()+" ");
+        }
+    }
     public static void main(String args[]){
         // Scanner scn = new Scanner(System.in);
         // String str = scn.nextLine();
