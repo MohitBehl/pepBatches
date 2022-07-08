@@ -119,4 +119,28 @@ public class Main {
       }
       visited[src] = false;
    }
+
+   public static ArrayList<ArrayList<Integer>> getAllComponents(ArrayList<Edge>[] graph){
+    boolean vis[] = new boolean[graph.length];
+    ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+    for(int i = 0 ; i < vis.length ; i++){
+        if(vis[i] == false){
+            ArrayList<Integer> comp = new ArrayList<>();
+            getComp(graph,vis,i,comp);
+            ans.add(comp);
+        }
+    }
+    return ans;
+   }
+
+    public static void getComp(ArrayList<Edge>[] graph,boolean []vis,int src,ArrayList<Integer> comp){
+        vis[src] = true;
+        comp.add(src);
+
+        for(Edge e : graph[src]){
+            if(vis[e.nbr] == false){
+                getComp(graph,vis,e.nbr,comp);
+            }
+        }
+    }
 }
