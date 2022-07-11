@@ -44,6 +44,17 @@ public class Main{
         }
         return root;
     }
+    static int idx;
+    public static Node construct1(Integer arr[]){ //  construct -> recursion
+        if(arr[idx] == null){
+            idx++;
+            return null;
+        }    
+        Node node = new Node(arr[idx++]);
+        node.left = construct1(arr);
+        node.right = construct1(arr);
+        return node;
+    }
     public static void display(Node node){
         if(node == null) return;
 
@@ -55,9 +66,34 @@ public class Main{
         display(node.left);
         display(node.right);
     }
+
+    public static int size(Node node) {
+        if(node == null) return 0;
+        // int lsize = size(node.left);
+        // int rsize = size(node.right);
+        // return lsize + rsize + 1;
+        return size(node.left) + size(node.right) + 1;
+    }
+
+    public static int sum(Node node) {
+        if(node == null) return 0;
+        return sum(node.left) + sum(node.right) + node.data;
+    }
+
+    public static int max(Node node) {
+        if(node == null) return Integer.MIN_VALUE;
+        return Math.max( Math.max( max(node.left) , max(node.right) ) , node.data );
+    }
+
+    public static int height(Node node) {
+        if(node == null) return -1;
+        return Math.max( height(node.left) , height(node.right) ) + 1;
+    }
     public static void main(String args[]){
         Integer arr[] = {10,20,40,null,null,50,70,null,null,null,30,null,60,null,null};
-        Node root = construct(arr);
+        // Node root = construct(arr);
+        // idx = 0;
+        // Node root = construct1(arr);
         display(root);
     }
 }
