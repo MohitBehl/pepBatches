@@ -30,9 +30,10 @@ public class Main {
          graph[v2].add(new Edge(v2, v1));
       }
 
-      int src = Integer.parseInt(br.readLine());
+    //   int src = Integer.parseInt(br.readLine());
 
-      BFS(graph,src);
+    //   BFS(graph,src);
+    System.out.println(isGraphCyclic(graph));
    }
    public static class Pair{
     int vtx;
@@ -61,5 +62,35 @@ public class Main {
             }
         }
     }
+   }
+
+   public static boolean isGraphCyclic(ArrayList<Edge>[] graph){
+    boolean vis[] = new boolean[graph.length];
+    for(int vtx = 0 ; vtx < graph.length ; vtx++){
+        if(vis[vtx] == false){ // unchecked vtx
+            boolean res = isCompCyclic(graph,vtx,vis); 
+            if(res) return true;
+        }
+    }
+    return false;
+   }
+    // isCompCyclic(ArrayList<Edge>[] graph) : returns true if cycle exists otherwise returns false & mark members of component
+   public static boolean isCompCyclic(ArrayList<Edge>[] graph,int src,boolean vis[]){
+    Queue<Integer> queue = new ArrayDeque<>();
+    queue.add(src);
+    while(queue.size() > 0){
+        int vtx = queue.remove();
+        if(vis[vtx] == true){ // cycle detected
+            return true;
+        }else{
+            vis[vtx] = true;
+            for(Edge e : graph[vtx]){
+                if(vis[e.nbr] == false){
+                    queue.add(e.nbr);
+                }
+            }
+        }
+    }
+    return false;
    }
 }
