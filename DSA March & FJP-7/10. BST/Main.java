@@ -128,6 +128,77 @@ public class Main {
     }
   }  
 
+//   public static Node add(Node node, int data) { // recursive
+//     if(node == null){
+//       Node newNode = new Node(data,null,null);
+//       return newNode;
+//     }
+
+//     if(data > node.data){
+//       node.right = add(node.right,data);
+//     }else if(data < node.data){
+//       node.left = add(node.left,data);
+//     }
+
+//     return node;
+//   }
+
+
+   public static Node add(Node root, int data) { // iterative
+    Node curr = root;
+    Node par = null;
+    while(true){
+      if(curr == null){
+          break;   
+      }
+      if(data == curr.data){
+        // ignore
+        return root;
+      }else if(data > curr.data){
+        par = curr;
+        curr = curr.right;
+      }else if(data < curr.data){
+        par = curr;
+        curr = curr.left;
+      }
+    }
+    Node newnode = new Node(data,null,null);// new node 
+    if(par == null){
+      return newnode;
+    }else if(data < par.data){
+      par.left = newnode;
+    }else if(data > par.data){
+      par.right = newnode;
+    }
+    return root;
+  }
+
+  public static Node remove(Node node, int data) {
+    if(node == null){
+        return null;
+    }
+
+    if(data > node.data){
+        node.right = remove(node.right,data);
+        return node;
+    }else if(data < node.data){
+        node.left = remove(node.left,data);
+        return node;
+    }else{
+        if(node.left == null && node.right == null){
+            return null;// leaf
+        }else if(node.left == null && node.right != null){
+            return node.right; // single child
+        }else if(node.left != null && node.right == null){
+            return node.left; // single child
+        }else{
+            int mval = max(node.left);
+            node.data = mval;
+            node.left = remove(node.left,mval);
+            return node;
+        }
+    }
+  }
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     int n = Integer.parseInt(br.readLine());
