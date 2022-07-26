@@ -29,11 +29,31 @@ public class Main{
         }
 
 
-        for(ArrayList<Edge> edges : graph){
-            for(Edge edge : edges){
-                System.out.println(edge.src+"->"+edge.nbr+"@"+edge.wt);
+        // for(ArrayList<Edge> edges : graph){
+        //     for(Edge edge : edges){
+        //         System.out.println(edge.src+"->"+edge.nbr+"@"+edge.wt);
+        //     }
+        // }
+
+        int src = scn.nextInt() , dest = scn.nextInt();
+
+        System.out.println(hasPath(graph,src,dest,new boolean[vtces]));
+    }
+
+    public static boolean hasPath(ArrayList<Edge>[] graph,int vtx,int dest,boolean []vis){
+        if(vtx == dest) return true;
+
+        vis[vtx] = true;
+
+        for(Edge e : graph[vtx]){
+            if(vis[e.nbr] == false){
+                // unvisited + nbr
+                boolean rres = hasPath(graph,e.nbr,dest,vis);
+                if(rres) return true;
             }
         }
+
+        return false;
     }
 }
 
