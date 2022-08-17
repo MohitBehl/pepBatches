@@ -21,7 +21,7 @@ class LRUCache {
         size++;
     }
     public void removeNode(Node node){
-        if(size == 1){
+        if(node.next == null && node.prev == null){
             head = tail = null;
         }else if(size > 1){
             if(node.next == null){ // tail
